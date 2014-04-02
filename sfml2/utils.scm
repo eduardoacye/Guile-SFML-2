@@ -1,3 +1,4 @@
+;;; PENDING FOR DELETION (EACH LIBRARY WILL HAVE ITS OWN UTILITY FUNCTIONS IN A FILE NAMED common.scm)
 (define-module (sfml2 utils)
   #:use-module (system foreign)
   #:export (number->boolean
