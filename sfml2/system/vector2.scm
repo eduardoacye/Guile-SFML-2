@@ -1,6 +1,5 @@
 (define-module (sfml2 system vector2)
   #:use-module (system foreign)
-  #:use-module (sfml2 utils)
   #:export (sf-vector2i
 	    sf-vector2u
 	    sf-vector2f
