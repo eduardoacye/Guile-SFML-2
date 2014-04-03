@@ -1,8 +1,6 @@
 (define-module (sfml2 system common)
   #:use-module (system foreign)
-  #:export (foreign-function
-	    number->boolean
-	    boolean->number))
+  #:export (foreign-function))
 
 
 ;;; Dynamic link with the CSFML/System library
@@ -15,11 +13,3 @@
      (define name (pointer->procedure ret
 				      (dynamic-func string-name lib-sfml-system)
 				      args)))))
-
-;;; Convert a number to a boolean truth value
-(define (number->boolean n)
-  (not (zero? n)))
-
-;;; Convert a boolean truth value to a number
-(define (boolean->number b)
-  (if b 1 0))
