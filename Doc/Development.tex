@@ -1,7 +1,7 @@
 \documentclass[latterpaper, leqno]{article}
 \usepackage[spanish]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage{concmath}
+%\usepackage{concmath}
 \usepackage[margin=1.22in]{geometry}
 
 \title{Development notes of the Guile-SFML bindings}
@@ -11,5 +11,106 @@
 \begin{document}
 
 \maketitle
+
+\section*{About}
+This is a development documentation, transcribed from the notes I write for the planning and programming related to this proyect. The reader may encounter ideas, struggles, and references related to the development of the bindings.
+
+This notes can be useful for me in the future and to other people that want to use a C library from GNU Guile. However my first language isn't english so any suggestions or corrections can be mailed to \texttt{eduardo.acye@gmail.com}.
+
+\section*{Development plan}
+The goal of this proyect is constructing a clean and simple library for graphics and audio interactive programming.
+
+I have C++ background but currently getting more involved with the Lisp family of languages, in school I had to write a simple game in C++ and chose the SFML library to handle the graphics, input and audio. I liked it so much that i wanted to use the library from a Scheme environment. The first thing i tried was to write the bindings using the static FFI using the Guile manual as a starting point, but it was a lot of not fun C and C++ programming (I have suspended the development of this bindings but the things i got to work live in my \texttt{https://github.com/eduardoacye/Guile-SFML-1} repository).
+
+Now the intention is to write the bindings using the Dynamic FFI. The process for getting the proyect done is divided into three steps:
+
+\begin{enumerate}
+\item Mapping the CSFML structures and functions directly to Guile with the Dynamic FFI.
+\item Wrapping the previous bindings to create modules that use GOOPS and Scheme idioms to work with the SFML implementation.
+\item Expanding the previous modules with useful functions, macros and classes that are not part of SFML.
+\end{enumerate}
+
+There isn't much documentation in the official Guile Reference Manual about writting bindings with the Dynamic Foreign Function Interface, however there are a couple of proyects of bindings for Guile using this method that I think are very helpful, in particular Andy Wingo's guile-figl repository and David Thompson guile-allegro5 and guile-2d repositories.
+
+I recomend you check those out:
+\begin{itemize}
+\item guile-figl at \texttt{https://gitorious.org/guile-figl}
+\item guile-allegro5 at \texttt{https://github.com/davexunit/guile-allegro5}
+\item guile-2d at \texttt{https://github.com/davexunit/guile-2d}
+\end{itemize}
+
+\section{Raw bindings from CSFML}
+This is the first step of the development process. And it consist of getting all the SFML structures and functions working from Guile. I'm using the C bindings as a starting point. To start working i had to compile Guile (currently using the 2.0.9 version), SFML 2.1 and CSFML 2.1.
+
+The structure of the bindings is very similar to the directory structure of the CSFML source code. There is one module for each file in CSFML, however there might be some files missing that provide C++ and C functionalities that Guile already have (such as multithreading).
+
+\subsection*{guile-sfml directory tree}
+\begin{itemize}
+
+\item \textbf{sfml2}
+  \begin{itemize}
+
+  \item \textbf{audio}
+    \begin{itemize}
+    \item \texttt{todo}
+    \end{itemize}
+
+  \item \textbf{graphics}
+    \begin{itemize}
+    \item \texttt{todo}
+    \end{itemize}
+
+  \item \textbf{network}
+    \begin{itemize}
+    \item \texttt{todo}
+    \end{itemize}
+
+  \item \textbf{system}
+    \begin{itemize}
+    \item clock.scm
+    \item common.scm
+    \item sleep.scm
+    \item time.scm
+    \item vector2.scm
+    \item vector3.scm
+    \end{itemize}
+
+  \item system.scm
+
+  \item utils.scm
+
+  \item \textbf{window}
+    \begin{itemize}
+    \item \texttt{todo}
+    \end{itemize}
+
+  \end{itemize}
+
+\end{itemize}
+
+\subsection*{Common code}
+The code that has to be aviable from every sub-library, like auxiliary procedures and useful macros are in the \texttt{sfml2/utils.scm} file. The code that has to be aviable from every module in a specific sub-library, like the macro for defining a foreign function of that sub-library is in the \texttt{sfml2/sub-lib/common.scm} file, where \texttt{sub-lib} can be: \texttt{audio}, \texttt{graphics}, \texttt{network}, \texttt{system} or \texttt{window}.
+
+\subsection{SFML/System}
+\subsection{SFML/Window}
+\subsection{SFML/Graphics}
+\subsection{SFML/Audio}
+\subsection{SFML/Network}
+\subsection{Testing bindings: SFML 2.1 tutorials}
+\subsubsection*{Basic application}
+\subsubsection*{Graphics tutorial}
+\subsubsection*{Autio tutorial}
+
+\section{SFML adapted for Guile}
+\subsection{SFML/System}
+\subsection{SFML/Window}
+\subsection{SFML/Graphics}
+\subsection{SFML/Audio}
+\subsection{SFML/Network}
+\subsection{Testing library: Programs constructed with SFML}
+\subsubsection*{CodeFrame port}
+\subsubsection*{Keyboard piano}
+
+\section{Automatón}
 
 \end{document}
