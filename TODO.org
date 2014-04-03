@@ -1,0 +1,51 @@
+#+TITLE: Checklist for the proyect
+
+* Raw bindings
+** DONE SFML/System
+*** DONE common.scm
+*** DONE binding structures
+*** DONE binding functions
+** TODO SFML/Window
+*** TODO common.scm
+*** TODO binding structures
+*** TODO binding functions
+** TODO SFML/Graphics
+*** TODO common.scm
+*** TODO binding structures
+*** TODO binding functions
+** TODO SFML/Audio
+*** TODO common.scm
+*** TODO binding structures
+*** TODO binding functions
+** TODO SFML/Network
+*** TODO common.scm
+*** TODO binding structures
+*** TODO binding functions
+** TODO Examples
+*** tutorials from http://sfml-dev.org/
+* guile-sfml library
+** TODO SFML/System
+*** TODO common
+*** TODO classes
+*** TODO methods
+** TODO SFML/Window
+*** TODO common
+*** TODO classes
+*** TODO methods
+** TODO SFML/Graphics
+*** TODO common
+*** TODO classes
+*** TODO methods
+** TODO SFML/Audio
+*** TODO common
+*** TODO classes
+*** TODO methods
+** TODO SFML/Network
+*** TODO common
+*** TODO classes
+*** TODO methods
+** TODO Examples
+*** TODO super simple text editor
+*** TODO crappy piano
+* automaton expansion
+** define the outlines for this library
