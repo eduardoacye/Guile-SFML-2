@@ -1,5 +1,3 @@
-#+TITLE: Checklist for the proyect
-
 * Raw bindings
 ** DONE SFML/System
 *** DONE common.scm
@@ -21,6 +19,7 @@
 *** TODO common.scm
 *** TODO binding structures
 *** TODO binding functions
+** TODO Code documentation
 ** TODO Examples
 *** tutorials from http://sfml-dev.org/
 * guile-sfml library
@@ -44,6 +43,7 @@
 *** TODO common
 *** TODO classes
 *** TODO methods
+** TODO Code documentation
 ** TODO Examples
 *** TODO super simple text editor
 *** TODO crappy piano
