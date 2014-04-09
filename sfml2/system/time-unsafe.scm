@@ -1,4 +1,4 @@
-(define-module (sfml2 system time)
+(define-module (sfml2 system time-unsafe)
   #:use-module (system foreign)
   #:use-module (sfml2 system common)
   #:export (sf-time

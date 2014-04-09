@@ -1,4 +1,4 @@
-(define-module (sfml2 system vector3)
+(define-module (sfml2 system vector3-unsafe)
   #:use-module (system foreign)
   #:export (sf-vector3f
 	    pointer->sf-vector3f

@@ -1,4 +1,4 @@
-(define-module (sfml2 system vector2)
+(define-module (sfml2 system vector2-unsafe)
   #:use-module (system foreign)
   #:export (sf-vector2i
 	    sf-vector2u

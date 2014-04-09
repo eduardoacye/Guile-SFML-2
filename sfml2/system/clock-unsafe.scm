@@ -1,7 +1,7 @@
-(define-module (sfml2 system clock)
+(define-module (sfml2 system clock-unsafe)
   #:use-module (system foreign)
   #:use-module (sfml2 system common)
-  #:use-module (sfml2 system time)
+  #:use-module (sfml2 system time-unsafe)
   #:export (<sf-clock>
 	    sf-clock?
 	    wrap-sf-clock
