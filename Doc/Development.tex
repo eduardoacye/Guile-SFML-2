@@ -1,8 +1,9 @@
 \documentclass[latterpaper, leqno]{article}
 \usepackage[spanish]{babel}
 \usepackage[utf8]{inputenc}
-%\usepackage{concmath}
+\usepackage{concmath}
 \usepackage[margin=1.22in]{geometry}
+\usepackage{listings}
 
 \title{Development notes of the Guile-SFML bindings}
 \author{Eduardo Acuña Yeomans}
@@ -16,6 +17,8 @@
 This is a development documentation, transcribed from the notes I write for the planning and programming related to this proyect. The reader may encounter ideas, struggles, and references related to the development of the bindings.
 
 This notes can be useful for me in the future and to other people that want to use a C library from GNU Guile. However my first language isn't english so any suggestions or corrections can be mailed to \texttt{eduardo.acye@gmail.com}.
+
+This document is being written as the bindings are coded, it is supposed to be read in order (it is not a reference manual for the bindings).
 
 \section*{Development plan}
 The goal of this proyect is constructing a clean and simple library for graphics and audio interactive programming.
@@ -92,6 +95,188 @@ The structure of the bindings is very similar to the directory structure of the 
 The code that has to be aviable from every sub-library, like auxiliary procedures and useful macros are in the \texttt{sfml2/utils.scm} file. The code that has to be aviable from every module in a specific sub-library, like the macro for defining a foreign function of that sub-library is in the \texttt{sfml2/sub-lib/common.scm} file, where \texttt{sub-lib} can be: \texttt{audio}, \texttt{graphics}, \texttt{network}, \texttt{system} or \texttt{window}.
 
 \subsection{SFML/System}
+The SFML/System library seems to be very simple, the bindings exist for a subset of the SFML code. I opted for excluding the multithreading part. I did this because Guile can provide this features and in the SFML tutorials, the author writes:
+
+\begin{quotation}
+ In its newest version (2011), the C++ standard library provides a set of classes for threading. At the time SFML was written, the C++11 standard was not written and there was no standard way of creating threads. When SFML 2.0 was released, there were still a lot of compilers that didn't support this new standard.
+
+If you work with compilers that support the new standard and its \texttt{<thread>} header, forget about SFML classes and use it -- it will be much better. But if you work with a pre-2011 compiler, or plan to distribute your code and want it to be fully portable, then SFML threading classes are a good solution. 
+\end{quotation}
+
+I hope that this desition doesn't break the whole proyect, if I notice that they are essential for the bindings to work, this parts will be written.
+
+\subsubsection*{Understanding the dynamic foreign function interface}
+There is very little documentation in the Guile Reference Manual regarding the Dynamic Foreign Function Interface. In the guile-figl, guile-allegro5 and guile-2d code, there are some cool macros to facilitate the implementation of C features (like \texttt{define-enumeration} and \texttt{define-foreign}).
+
+I don't have the ability to design and implement good macros, however i'll try to explain in this section of the document how i understand this FFI works.
+
+\emph{Note:} I have not yet worked with the \emph{bytevectors} described in the Guile Manual.
+
+\bigskip
+
+There are two important things that make up a C library: The structures that represent the data and the functions that manipulate the data. The library i'm wrapping is called CSFML that is itself a binding in C for the SFML library (that is written in C++).
+
+The way CSFML is written has two types of structures: the simple compound data in SFML is a C struct (usualy the ones that are composed from standard C types like the 3-dimentional vector that just has 3 float numbers in the struct); the more complicated classes are handled as opaque data types, this are structs without data that are used with pointers to the C++ class that has the data, the functions that are aviable from C are mixed with C++ to perform operations with the opaque pointer, so the C part of the program doesn't know what the C++ part does, it just glue code.
+
+The Guile module we have for working with the FFI is \texttt{(system foreign)}. To have access to the functions from the library we have to use the procedure \texttt{dynamic-link} to get a linked Scheme object (we'll use this when binding functions).
+
+I'll call the first type of structures \emph{simple data} and the second type of structures \emph{opaque data}. The simple data is going to be wrapped in Guile with \texttt{make-c-struct} (read 6.20.5.4 Foreign Structs from the Guile Manual) and the opaque data is going to be wrapped in Guile with \texttt{define-wrapped-pointer-type} (read 6.20.5.3 Void Pointers and Byte Access from the Guile Manual).
+
+The C functions will be bind using a macro that calls the \texttt{pointer->procedure} with the corresponding library (read 6.20.6 Dynamic FFI from the Guile Manual).
+
+There are enums and unions too, but i have not decided how i'll handle those constructs.
+
+\bigskip
+
+In the following two sections I illustrate an example for wrapping a C structure named \texttt{cucus} that has some functions that manipulate the structure, then i'll proceed to handle pointers to structures and pointers to pointers to structures.
+
+\begin{verbatim}
+struct cucus
+{
+    int a;
+    float b;
+    char c;
+};
+
+struct cucus y = {666, -.01, 'f'};
+struct cucus *ptr_y = &y;
+
+void take_cucus(struct cucus x)
+{
+    printf("a  ==  %d\n", x.a);
+    printf("b  ==  %f\n", x.b);
+    printf("c  ==  %c\n", x.c);
+}
+void take_cucus_ptr(struct cucus * x)
+{
+    if(x == 0){
+        printf("the pointer is NULL\n");
+    }else{
+        printf("a  ==  %d\n", (*x).a);
+        printf("b  ==  %f\n", (*x).b);
+        printf("c  ==  %c\n", (*x).c);
+    }
+}
+void take_cucus_ptr_ptr(struct cucus ** x)
+{
+    if(x == 0){
+        printf("the pointer is NULL\n");
+    }else if(*x == 0){
+        printf("dereferenced pointer is NULL\n");
+    }else{
+        printf("a  ==  %d\n", (*(*x)).a);
+        printf("b  ==  %f\n", (*(*x)).b);
+        printf("c  ==  %c\n", (*(*x)).c);
+    }
+}
+struct cucus give_cucus(void)
+{
+    struct cucus x = {0, 3.1416, 'z'};
+    return x;
+}
+struct cucus * give_cucus_ptr(void)
+{
+    return &y;
+}
+struct cucus ** give_cucus_ptr_ptr(void)
+{
+    return &(ptr_y);
+}
+\end{verbatim}
+
+\subsubsection*{Binding the structures}
+There is one list and two functions that are defined for each simple data structure:
+\begin{itemize}
+  \item List of C types
+  \item Procedure structure to pointer
+  \item Procedure pointer to structure
+\end{itemize}
+
+This simple data structures are represented at the scheme level as lists, but in the C side are normal structs. Assuming we have made a dynamic link with the shared library that has the struct and functions definition above we define in scheme:
+
+\begin{verbatim}
+;;; List of C types
+(define cucus-type (list int float int8))
+
+;;; Make a C struct from a list of Scheme values
+(define (cucus->pointer lst-struct)
+    (make-c-struct cucus-type lst-struct))
+
+;;; Return a list of Scheme values from a C struct
+(define (pointer->cucus c-struct)
+    (parse-c-struct c-struct cucus-type))
+\end{verbatim}
+
+It is important to note that the \texttt{(system foreign)} module doesn't export a \texttt{char} type, however the size of the char is 1 byte and we represent it as an integer (the \texttt{int8} from the code above is the \texttt{char}).
+
+We can handle the cucus C struct as opaque data with the \texttt{define-wrapped-pointer-type} procedure, a simple definition for this is:
+
+\begin{verbatim}
+;;; Scheme record for representing an opaque C cucus struct
+(define-wrapped-pointer-type cucus
+    cucus?                            ; predicate
+    wrap-cucus                        ; pointer to record
+    unwrap-cucus                      ; record to pointer
+    (lambda (c port)                  ; printer
+        (display "<cucus " port)
+        (display (cucus-parse (unwrap-cucus c)) port)
+        (display ">" port)))
+\end{verbatim}
+
+\subsubsection*{Binding the functions}
+The functions are defined with \texttt{pointer->procedure}, and each function in the library must have an equivalent procedure in Guile. It is necessary to know the name of the C function (we use a Scheme string to represent it) and have aviable the library link as a Scheme object (In this example we use \texttt{(define libcucus (dynamic-link ".../libcucus"))} so the name of this object is \texttt{libcucus}).
+
+\begin{verbatim}
+;;; Binding for the take_cucus C function in libcucus
+(define take-cucus
+    (pointer->procedure void
+                        (dynamic-func "take_cucus" libcucus)
+                        (list cucus-type)))
+
+;;; Binding for the take_cucus_ptr C function in libcucus
+(define take-cucus-ptr
+    (pointer->procedure void
+                        (dynamic-func "take_cucus_ptr" libcucus)
+                        (list '*)))
+
+;;; Binding for the take_cucus_ptr_ptr C function in libcucus
+(define take-cucus-ptr
+    (pointer->procedure void
+                        (dynamic-func "take_cucus_ptr" libcucus)
+                        (list '*)))
+
+;;; Binding for the give_cucus C function in libcucus
+(define give-cucus
+    (pointer->procedure cucus-type
+                        (dynamic-func "give_cucus" libcucus)
+                        (list)))
+
+;;; Binding for the give_cucus_ptr C function in libcucus
+(define give-cucus-ptr
+    (pointer->procedure '*
+                        (dynamic-func "give_cucus_ptr" libcucus)
+                        (list)))
+
+;;; Binding for the give_cucus_ptr_ptr C function in libcucus
+(define give-cucus-ptr-ptr
+    (pointer->procedure '*
+                        (dynamic-func "give_cucus_ptr_ptr" libcucus)
+                        (list)))
+\end{verbatim}
+
+With these definitions we can manipulate the cucus C struct and call the functions that manipulate the structure.
+
+I use a macro for binding the C functions, I took it from David Thompson (\texttt{guile-2d/2d/wrappers/ftgl.scm} from the github repository) with a little modification to take a symbol for the C function name instead of a string (just to make it look more like the function declaration):
+
+\begin{verbatim}
+(define-syntax define-ff
+    (syntax-rules ()
+        ((define-ff name ret c-name args)
+         (define name (pointer->procedure ret
+                                          (dynamic-func (symbol->string 'c-name) lib)
+                                          args)))))
+\end{verbatim}
+
 \subsection{SFML/Window}
 \subsection{SFML/Graphics}
 \subsection{SFML/Audio}
