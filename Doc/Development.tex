@@ -277,6 +277,30 @@ I use a macro for binding the C functions, I took it from David Thompson (\textt
                                           args)))))
 \end{verbatim}
 
+\subsubsection*{Unsafe version of the System sub-library}
+The first thing I did was determine all the structures that needed to be binded, then classify them by simple data or opaque data. The next step is knowing what C functions are involved and then listing the order they had to be implemented.
+
+\begin{itemize}
+  \item file: vector2-unsafe.scm (simple data)
+  \item file: vector3-unsafe.scm (simple data)
+  \item file: time-unsafe.scm (simple data)
+    \begin{itemize}
+      \item file: clock-unsafe.scm (opaque data)
+      \item file: sleep-unsafe.scm (no data)
+    \end{itemize}
+\end{itemize}
+
+There are another two files not mentioned in this order: \texttt{common.scm} (in the \texttt{sfml2/system/} folder) and \texttt{system-unsafe.scm} (in the \texttt{sfml2/} folder). The first of this files contains the macro \texttt{define-ff} with the corresponding link to the \texttt{libcsfml-system} library and the other file is just going to export all of the symbols exported from every module in this sub-library.
+
+\bigskip
+
+\emph{Note:} The word \emph{unsafe} is present in the names of the files because the procedures and data defined handle C pointers and programming with this modules is considered dangerous. In the second step of the project a wrapper for this modules will be written so that everything is in scheme land.
+
+\bigskip
+
+\emph{Naming conventions:} I use only lower-case; prefixed \texttt{"sf-"} to the type name in the list of C types in the structure definition, \texttt{pointer->type}, \texttt{type->pointer} procedures, opaque data name (like \texttt{<sf-type>}), type predicate, \texttt{wrap} and \texttt{unwrap} procedures; the function bindings of the CSFML library are prefixed with \texttt{"\%sf-"} for identifying as unsafe procedures.
+
+
 \subsection{SFML/Window}
 \subsection{SFML/Graphics}
 \subsection{SFML/Audio}
