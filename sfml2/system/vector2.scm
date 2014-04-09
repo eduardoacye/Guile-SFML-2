@@ -14,28 +14,28 @@
 ;;; sf-vector2i structure binding
 (define sf-vector2i (list int int))
 
-(define (pointer->sf-vector2i pointer)
-  (parse-c-struct pointer sf-vector2i))
+(define (pointer->sf-vector2i c-struct)
+  (parse-c-struct c-struct sf-vector2i))
 
-(define (sf-vector2i->pointer x y)
-  (make-c-struct sf-vector2i (list x y)))
+(define (sf-vector2i->pointer lst-struct)
+  (make-c-struct sf-vector2i lst-struct))
 
 
 ;;; sf-vector2u structure binding
 (define sf-vector2u (list unsigned-int unsigned-int))
 
-(define (pointer->sf-vector2u pointer)
-  (parse-c-struct pointer sf-vector2u))
+(define (pointer->sf-vector2u c-struct)
+  (parse-c-struct c-struct sf-vector2u))
 
-(define (sf-vector2u->pointer x y)
-  (make-c-struct sf-vector2u (list x y)))
+(define (sf-vector2u->pointer lst-struct)
+  (make-c-struct sf-vector2u lst-struct))
 
 
 ;;; sf-vector2f structure binding
 (define sf-vector2f (list float float))
 
-(define (pointer->sf-vector2f pointer)
-  (parse-c-struct pointer sf-vector2f))
+(define (pointer->sf-vector2f c-struct)
+  (parse-c-struct c-struct sf-vector2f))
 
-(define (sf-vector2f->pointer x y)
-  (make-c-struct sf-vector2f (list x y)))
+(define (sf-vector2f->pointer lst-struct)
+  (make-c-struct sf-vector2f lst-struct))

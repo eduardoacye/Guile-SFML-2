@@ -4,31 +4,37 @@
   #:export (sf-time
 	    pointer->sf-time
 	    sf-time->pointer
-	    sf-time-as-seconds
-	    sf-time-as-milliseconds
-	    sf-time-as-microseconds
-	    sf-seconds
-	    sf-milliseconds
-	    sf-microseconds))
+	    %sf-time-as-seconds
+	    %sf-time-as-milliseconds
+	    %sf-time-as-microseconds
+	    %sf-seconds
+	    %sf-milliseconds
+	    %sf-microseconds))
 
 ;;; sf-time structure binding
 (define sf-time (list int64))
 
-(define (pointer->sf-time pointer)
-  (parse-c-struct pointer sf-time))
+(define (pointer->sf-time c-struct)
+  (parse-c-struct c-struct sf-time))
 
-(define (sf-time->pointer microseconds)
-  (make-c-struct sf-time (list microseconds)))
+(define (sf-time->pointer lst-struct)
+  (make-c-struct sf-time lst-struct))
 
 ;;; binding functions
-(foreign-function sf-time-as-seconds : float "sfTime_asSeconds" sf-time)
+(define-ff %sf-time-as-seconds
+           float sfTime_asSeconds sf-time)
 
-(foreign-function sf-time-as-milliseconds : int32 "sfTime_asMilliseconds" sf-time)
+(define-ff %sf-time-as-milliseconds
+           int32 sfTime_asMilliseconds sf-time)
 
-(foreign-function sf-time-as-microseconds : int64 "sfTime_asMicroseconds" sf-time)
+(define-ff %sf-time-as-microseconds
+           int64 sfTime_asMicroseconds sf-time)
 
-(foreign-function sf-seconds : sf-time "sfSeconds" (list float))
+(define-ff %sf-seconds
+           sf-time sfSeconds (list float))
 
-(foreign-function sf-milliseconds : sf-time "sfMilliseconds" (list int32))
+(define-ff %sf-milliseconds
+           sf-time sfMilliseconds (list int32))
 
-(foreign-function sf-microseconds : sf-time "sfMicroseconds" (list int64))
+(define-ff %sf-microseconds
+           sf-time sfMicroseconds (list int64))
