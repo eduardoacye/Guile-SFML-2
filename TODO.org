@@ -3,23 +3,27 @@
 *** DONE common.scm
 *** DONE binding structures
 *** DONE binding functions
+*** TODO Code documentation
 ** TODO SFML/Window
 *** TODO common.scm
 *** TODO binding structures
 *** TODO binding functions
+*** TODO Code documentation
 ** TODO SFML/Graphics
 *** TODO common.scm
 *** TODO binding structures
 *** TODO binding functions
+*** TODO Code documentation
 ** TODO SFML/Audio
 *** TODO common.scm
 *** TODO binding structures
 *** TODO binding functions
+*** TODO Code documentation
 ** TODO SFML/Network
 *** TODO common.scm
 *** TODO binding structures
 *** TODO binding functions
-** TODO Code documentation
+*** TODO Code documentation
 ** TODO Examples
 *** tutorials from http://sfml-dev.org/
 * guile-sfml library
@@ -27,23 +31,27 @@
 *** TODO common
 *** TODO classes
 *** TODO methods
+*** TODO Code documentation
 ** TODO SFML/Window
 *** TODO common
 *** TODO classes
 *** TODO methods
+*** TODO Code documentation
 ** TODO SFML/Graphics
 *** TODO common
 *** TODO classes
 *** TODO methods
+*** TODO Code documentation
 ** TODO SFML/Audio
 *** TODO common
 *** TODO classes
 *** TODO methods
+*** TODO Code documentation
 ** TODO SFML/Network
 *** TODO common
 *** TODO classes
 *** TODO methods
-** TODO Code documentation
+*** TODO Code documentation
 ** TODO Examples
 *** TODO super simple text editor
 *** TODO crappy piano
