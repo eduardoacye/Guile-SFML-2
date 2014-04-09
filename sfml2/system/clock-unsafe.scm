@@ -1,3 +1,12 @@
+;;; 2014 EAY eduardo.acye@gmail.com
+
+;;;
+;;; file: sfml2/system/clock-unsafe.scm
+;;; 
+;;; Module that exports the <sf-clock> record and the associated
+;;; procedures
+;;;
+
 (define-module (sfml2 system clock-unsafe)
   #:use-module (system foreign)
   #:use-module (sfml2 system common)
@@ -12,7 +21,7 @@
 	    %sf-clock-get-elapsed-time
 	    %sf-clock-restart))
 
-;;; sf-clock pointer structure binding
+;;; record for the sfClock opaque structure
 (define-wrapped-pointer-type <sf-clock>
   sf-clock?
   wrap-sf-clock unwrap-sf-clock
@@ -21,7 +30,7 @@
 
 ;;; binding functions
 (define-ff %sf-clock-create
-           '* sfClock_create (list ))
+           '* sfClock_create (list))
 
 (define-ff %sf-clock-copy
            '* sfClock_copy (list '*))

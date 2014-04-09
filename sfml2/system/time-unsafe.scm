@@ -1,3 +1,12 @@
+;;; 2014 EAY eduardo.acye@gmail.com
+
+;;;
+;;; file: sfml2/system/time-unsafe.scm
+;;; 
+;;; Module that exports the sf-time struct type definition and the
+;;; associated procedures
+;;;
+
 (define-module (sfml2 system time-unsafe)
   #:use-module (system foreign)
   #:use-module (sfml2 system common)
@@ -11,7 +20,7 @@
 	    %sf-milliseconds
 	    %sf-microseconds))
 
-;;; sf-time structure binding
+;;; structure binding for the sfTime simple structure
 (define sf-time (list int64))
 
 (define (pointer->sf-time c-struct)
