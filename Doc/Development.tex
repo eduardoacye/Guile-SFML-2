@@ -70,15 +70,15 @@ The structure of the bindings is very similar to the directory structure of the 
 
   \item \textbf{system}
     \begin{itemize}
-    \item clock.scm
+    \item clock-unsafe.scm
     \item common.scm
-    \item sleep.scm
-    \item time.scm
-    \item vector2.scm
-    \item vector3.scm
+    \item sleep-unsafe.scm
+    \item time-unsafe.scm
+    \item vector2-unsafe.scm
+    \item vector3-unsafe.scm
     \end{itemize}
 
-  \item system.scm
+  \item system-unsafe.scm
 
   \item utils.scm
 
@@ -302,6 +302,27 @@ There are another two files not mentioned in this order: \texttt{common.scm} (in
 
 
 \subsection{SFML/Window}
+
+The window sub-library has more structures and functions than the system sub-library but the process of implementing the bindings is the same. There are two struggles I encounter reviewing the code: First, the CSFML library uses unions to represent the event data (a union of structs) so there is going to be an implementation of unions in Guile or a workaround this issue; the second struggle is that a file (\texttt{WindowHandle.h}) contains platform specific things (so i have to program this part of the bindings differently for UNIX, Windows and Mac), my intentions are getting the bindings to work on Linux, but I'll try to make them work for the other platforms as well.
+
+\subsubsection*{Unsafe version of the Window sub-library}
+Here is the list of the Scheme files in order of implementation and the structure types:
+
+\begin{itemize}
+  \item file: context-unsafe.scm (opaque data)
+  \item file: joystick-unsafe.scm (enums)
+  \item file: keyboard-unsafe.scm (enums)
+  \item file: video-mode-unsafe.scm (simple data)
+  \item file: window-handle-unsafe.scm (no data)
+  \item file: event-unsafe.scm (enums, simple data and union)
+  \item file: window-unsafe.scm (enum, simple data and opaque data)
+  \item file: mouse-unsafe.scm (enum)
+\end{itemize}
+
+\subsubsection*{Enums implementation}
+
+\subsubsection*{Union implementation}
+
 \subsection{SFML/Graphics}
 \subsection{SFML/Audio}
 \subsection{SFML/Network}
