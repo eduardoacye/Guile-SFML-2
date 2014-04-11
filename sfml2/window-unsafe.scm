@@ -1,0 +1,256 @@
+;;; 2014 EAY eduardo.acye@gmail.com
+
+;;;
+;;; file: sfml2/window-unsafe.scm
+;;; 
+;;; Module that exports all the sfml2/window procedures, structures and
+;;; records.
+;;;
+
+(define-module (sfml2 window-unsafe)
+  #:use-module (sfml2 window context-unsafe)
+  #:use-module (sfml2 window event-unsafe)
+  #:use-module (sfml2 window joystick-unsafe)
+  #:use-module (sfml2 window keyboard-unsafe)
+  #:use-module (sfml2 window mouse-unsafe)
+  #:use-module (sfml2 window video-mode-unsafe)
+  #:use-module (sfml2 window window-handle-unsafe)
+  #:use-module (sfml2 window window-unsafe)
+  #:re-export (;; From sfml2/window/context-unsafe.scm
+	       <sf-context>
+	       sf-context?
+	       wrap-sf-context
+	       unwrap-sf-context
+	       %sf-context-create
+	       %sf-context-destroy
+	       %sf-context-set-active
+	       ;; From sfml2/window/event-unsafe.scm
+	       sf-event-type
+	       sf-evt-closed
+	       sf-evt-resized
+	       sf-evt-lost-focus
+	       sf-evt-gained-focus
+	       sf-evt-text-entered 
+	       sf-evt-key-pressed 
+	       sf-evt-key-released 
+	       sf-evt-mouse-wheel-moved 
+	       sf-evt-mouse-button-pressed 
+	       sf-evt-mouse-button-released 
+	       sf-evt-mouse-moved 
+	       sf-evt-mouse-entered 
+	       sf-evt-mouse-left 
+	       sf-evt-joystick-button-pressed 
+	       sf-evt-joystick-button-released 
+	       sf-evt-joystick-moved 
+	       sf-evt-joystick-connected 
+	       sf-evt-joystick-disconnected
+	       sf-key-event
+	       pointer->sf-key-event
+	       sf-key-event->pointer
+	       sf-text-event
+	       pointer->sf-text-event
+	       sf-text-event->pointer
+	       sf-mouse-move-event
+	       pointer->sf-mouse-move-event
+	       sf-mouse-move-event->pointer
+	       sf-mouse-button-event
+	       pointer->sf-mouse-button-event
+	       sf-mouse-button-event->pointer
+	       sf-mouse-wheel-event
+	       pointer->sf-mouse-wheel-event
+	       sf-mouse-wheel-event->pointer
+	       sf-joystick-move-event
+	       pointer->sf-joystick-move-event
+	       sf-joystick-move-event->pointer
+	       sf-joystick-button-event
+	       pointer->sf-joystick-button-event
+	       sf-joystick-button-event->pointer
+	       sf-joystick-connect-event
+	       pointer->sf-joystick-connect-event
+	       sf-joystick-connect-event->pointer
+	       sf-size-event
+	       pointer->sf-size-event
+	       sf-size-event->pointer
+	       sf-event
+	       pointer->sf-event
+	       sf-event->pointer
+	       ;; From sfml2/window/joystick-unsafe.scm
+	       sf-joystick-count
+	       sf-joystick-button-count
+	       sf-joystick-axis-count
+	       sf-joystick-axis
+	       sf-joystick-x
+	       sf-joystick-y
+	       sf-joystick-z
+	       sf-joystick-r
+	       sf-joystick-u
+	       sf-joystick-v
+	       sf-joystick-pov-x
+	       sf-joystick-pov-y
+	       %sf-joystick-is-connected
+	       %sf-joystick-get-button-count
+	       %sf-joystick-has-axis
+	       %sf-joystick-is-button-pressed
+	       %sf-joystick-get-axis-position
+	       %sf-joystick-update
+	       ;; From sfml2/window/keyboard-unsafe.scm
+	       sf-key-code
+	       sf-key-unknown
+	       sf-key-a
+	       sf-key-b
+	       sf-key-c
+	       sf-key-d
+	       sf-key-e
+	       sf-key-f
+	       sf-key-g
+	       sf-key-h
+	       sf-key-i
+	       sf-key-j
+	       sf-key-k
+	       sf-key-l
+	       sf-key-m
+	       sf-key-n
+	       sf-key-o
+	       sf-key-p
+	       sf-key-q
+	       sf-key-r
+	       sf-key-s
+	       sf-key-t
+	       sf-key-u
+	       sf-key-v
+	       sf-key-w
+	       sf-key-x
+	       sf-key-y
+	       sf-key-z
+	       sf-key-num-0
+	       sf-key-num-1
+	       sf-key-num-2
+	       sf-key-num-3
+	       sf-key-num-4
+	       sf-key-num-5
+	       sf-key-num-6
+	       sf-key-num-7
+	       sf-key-num-8
+	       sf-key-num-9
+	       sf-key-escape
+	       sf-key-l-control
+	       sf-key-l-shift
+	       sf-key-l-alt  
+	       sf-key-l-system    
+	       sf-key-r-control   
+	       sf-key-r-shift     
+	       sf-key-r-alt       
+	       sf-key-r-system    
+	       sf-key-menu        
+	       sf-key-l-bracket   
+	       sf-key-r-bracket   
+	       sf-key-semi-colon  
+	       sf-key-comma       
+	       sf-key-period      
+	       sf-key-quote       
+	       sf-key-slash       
+	       sf-key-back-slash  
+	       sf-key-tilde       
+	       sf-key-equal       
+	       sf-key-dash        
+	       sf-key-space       
+	       sf-key-return      
+	       sf-key-back        
+	       sf-key-tab         
+	       sf-key-page-up     
+	       sf-key-page-down   
+	       sf-key-end         
+	       sf-key-home        
+	       sf-key-insert      
+	       sf-key-delete      
+	       sf-key-add         
+	       sf-key-subtract    
+	       sf-key-multiply    
+	       sf-key-divide      
+	       sf-key-left        
+	       sf-key-right       
+	       sf-key-up          
+	       sf-key-down        
+	       sf-key-numpad-0    
+	       sf-key-numpad-1    
+	       sf-key-numpad-2    
+	       sf-key-numpad-3    
+	       sf-key-numpad-4    
+	       sf-key-numpad-5    
+	       sf-key-numpad-6    
+	       sf-key-numpad-7    
+	       sf-key-numpad-8    
+	       sf-key-numpad-9    
+	       sf-key-f1          
+	       sf-key-f2          
+	       sf-key-f3          
+	       sf-key-f4          
+	       sf-key-f5          
+	       sf-key-f6          
+	       sf-key-f7          
+	       sf-key-f8          
+	       sf-key-f9          
+	       sf-key-f10         
+	       sf-key-f11         
+	       sf-key-f12         
+	       sf-key-f13         
+	       sf-key-f14         
+	       sf-key-f15         
+	       sf-key-pause       
+	       sf-key-count       
+	       %sf-keyboard-is-key-pressed
+	       ;; From sfml2/window/mouse-unsafe.scm
+	       sf-mouse-button
+	       sf-mouse-left
+	       sf-mouse-right
+	       sf-mouse-middle
+	       sf-mouse-x-button-1
+	       sf-mouse-x-button-2
+	       sf-mouse-button-count
+	       ;; From sfml2/window/video-mode-unsafe.scm
+	       sf-video-mode
+	       pointer->sf-video-mode
+	       sf-video-mode->pointer
+	       %sf-video-mode-get-desktop-mode
+	       %sf-video-mode-get-fullscreen-modes
+	       %sf-video-mode-is-valid
+	       ;; From sfml2/window/window-handle-unsafe.scm
+	       sf-window-handle
+	       ;; From sfml2/window/window-unsafe.scm
+	       sf-window-style
+	       sf-none
+	       sf-titlebar
+	       sf-close
+	       sf-fullscreen
+	       sf-default-style
+	       <sf-window>
+	       sf-window?
+	       wrap-sf-window
+	       unwrap-sf-window
+	       sf-context-settings
+	       pointer->sf-context-settings
+	       sf-context-settings->pointer
+	       %sf-window-create
+	       %sf-window-create-unicode
+	       %sf-window-create-from-handle
+	       %sf-window-destroy
+	       %sf-window-close
+	       %sf-window-is-open
+	       %sf-window-get-settings
+	       %sf-window-poll-event
+	       %sf-window-wait-event
+	       %sf-window-get-position
+	       %sf-window-set-position
+	       %sf-window-get-size
+	       %sf-window-set-title
+	       %sf-window-set-unicode-title
+	       %sf-window-set-icon
+	       %sf-window-set-visible
+	       %sf-window-set-mouse-cursor-visible
+	       %sf-window-set-vertical-sync-enabled
+	       %sf-window-set-key-repeat-enabled
+	       %sf-window-set-active
+	       %sf-window-display
+	       %sf-window-set-framerate-limit
+	       %sf-window-set-joystick-threshold
+	       %sf-window-get-system-handle))

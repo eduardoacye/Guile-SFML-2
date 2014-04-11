@@ -32,6 +32,7 @@
 	    %sf-window-create-unicode
 	    %sf-window-create-from-handle
 	    %sf-window-destroy
+	    %sf-window-close
 	    %sf-window-is-open
 	    %sf-window-get-settings
 	    %sf-window-poll-event
@@ -74,6 +75,7 @@
 				  unsigned-int
 				  unsigned-int
 				  unsigned-int))
+(define sf-context-settings-* '*)
 
 (define (pointer->sf-context-settings c-struct)
   (parse-c-struct c-struct sf-context-settings))
@@ -86,19 +88,18 @@
            '* sfWindow_create (list sf-video-mode
 				    '*	; const char *
 				    sf-window-style
-				    sf-context-settings))
+				    sf-context-settings-*))
 
-;;; sf-context-settings should be passed as a pointer
 (define-ff %sf-window-create-unicode
            '* sfWindow_createUnicode (list sf-video-mode
 					   '* ; uint32 pointer
 					   sf-window-style
-					   sf-context-settings))
+					   sf-context-settings-*))
 
 ;;; sf-context-settings should be passed as a pointer
 (define-ff %sf-window-create-from-handle
            '* sfWindow_createFromHandle (list sf-window-handle
-					      sf-context-settings))
+					      sf-context-settings-*))
 
 (define-ff %sf-window-destroy
            void sfWindow_destroy (list '*))
@@ -114,7 +115,7 @@
 
 ;;; sf-event should be passed as a pointer
 (define-ff %sf-window-poll-event
-           sf-bool sfWindow_pollEvent (list '* sf-event))
+           sf-bool sfWindow_pollEvent (list '* '*))
 
 (define-ff %sf-window-wait-event
            sf-bool sfWindow_waitEvent (list '* sf-event))
