@@ -12,6 +12,9 @@
   #:export (sf-vector2i
 	    sf-vector2u
 	    sf-vector2f
+	    sf-vector2i-*
+	    sf-vector2u-*
+	    sf-vector2f-*
 	    pointer->sf-vector2i
 	    pointer->sf-vector2u
 	    pointer->sf-vector2f
@@ -29,6 +32,9 @@
 (define (sf-vector2i->pointer lst-struct)
   (make-c-struct sf-vector2i lst-struct))
 
+;;; Alias for sfVector2i*
+(define sf-vector2i-* '*)
+
 ;;; structure binding for the sfVector2u simple structure
 (define sf-vector2u (list unsigned-int unsigned-int))
 
@@ -38,6 +44,9 @@
 (define (sf-vector2u->pointer lst-struct)
   (make-c-struct sf-vector2u lst-struct))
 
+;;; Alias for sfVector2u*
+(define sf-vector2u-* '*)
+
 ;;; structure binding for the sfVector2f simple structure
 (define sf-vector2f (list float float))
 
@@ -46,3 +55,6 @@
 
 (define (sf-vector2f->pointer lst-struct)
   (make-c-struct sf-vector2f lst-struct))
+
+;;; Alias for sfVector2f*
+(define sf-vector2f-* '*)

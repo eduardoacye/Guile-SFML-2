@@ -9,8 +9,7 @@
 
 (define-module (sfml2 system common)
   #:use-module (system foreign)
-  #:export (define-foreign-function
-	    define-ff))
+  #:export (define-ff))
 
 
 ;;; Define a scheme object of the linked library libcsfml-system

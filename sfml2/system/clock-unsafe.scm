@@ -15,6 +15,7 @@
 	    sf-clock?
 	    wrap-sf-clock
 	    unwrap-sf-clock
+	    sf-clock-*
 	    %sf-clock-create
 	    %sf-clock-copy
 	    %sf-clock-destroy
@@ -28,18 +29,21 @@
   (lambda (c port)
     (display "<sf-clock>" port)))
 
+;;; Alias for sfClock*
+(define sf-clock-* '*)
+
 ;;; binding functions
 (define-ff %sf-clock-create
-           '* sfClock_create (list))
+           sf-clock-* sfClock_create (list))
 
 (define-ff %sf-clock-copy
-           '* sfClock_copy (list '*))
+           sf-clock-* sfClock_copy (list sf-clock-*))
 
 (define-ff %sf-clock-destroy
-           void sfClock_destroy (list '*))
+           void sfClock_destroy (list sf-clock-*))
 
 (define-ff %sf-clock-get-elapsed-time
-           sf-time sfClock_getElapsedTime (list '*))
+           sf-time sfClock_getElapsedTime (list sf-clock-*))
 
 (define-ff %sf-clock-restart
-           sf-time sfClock_restart (list '*))
+           sf-time sfClock_restart (list sf-clock-*))

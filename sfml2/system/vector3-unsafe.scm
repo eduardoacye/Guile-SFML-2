@@ -10,6 +10,7 @@
 (define-module (sfml2 system vector3-unsafe)
   #:use-module (system foreign)
   #:export (sf-vector3f
+	    sf-vector3f-*
 	    pointer->sf-vector3f
 	    sf-vector3f->pointer))
 
@@ -21,3 +22,6 @@
 
 (define (sf-vector3f->pointer lst-struct)
   (make-c-struct sf-vector3f lst-struct))
+
+;;; Alias for sfVector3f*
+(define sf-vector3f-* '*)

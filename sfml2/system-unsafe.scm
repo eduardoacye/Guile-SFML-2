@@ -1,3 +1,12 @@
+;;; 2014 EAY eduardo.acye@gmail.com
+
+;;;
+;;; file: sfml2/system-unsafe.scm
+;;; 
+;;; Module that exports all the sfml2/system procedures, structures and
+;;; records.
+;;; 
+
 (define-module (sfml2 system-unsafe)
   #:use-module (sfml2 system time-unsafe)
   #:use-module (sfml2 system clock-unsafe)
@@ -8,6 +17,7 @@
 	       sf-time
 	       pointer->sf-time
 	       sf-time->pointer
+	       sf-time-*
 	       %sf-time-as-seconds
 	       %sf-time-as-milliseconds
 	       %sf-time-as-microseconds
@@ -19,6 +29,7 @@
 	       sf-clock?
 	       wrap-sf-clock
 	       unwrap-sf-clock
+	       sf-clock-*
 	       %sf-clock-create
 	       %sf-clock-copy
 	       %sf-clock-destroy
@@ -30,6 +41,9 @@
 	       sf-vector2i
 	       sf-vector2u
 	       sf-vector2f
+	       sf-vector2i-*
+	       sf-vector2u-*
+	       sf-vector2f-*
 	       pointer->sf-vector2i
 	       pointer->sf-vector2u
 	       pointer->sf-vector2f
@@ -38,5 +52,12 @@
 	       sf-vector2f->pointer
 	       ;; From sfml2/system/vector3-unsafe.scm
 	       sf-vector3f
+	       sf-vector3f-*
 	       pointer->sf-vector3f
-	       sf-vector3f->pointer))
+	       sf-vector3f->pointer
+	       ;; From sfml2/system/input-stream-unsafe.scm
+	       <sf-input-stream>
+	       sf-input-stream?
+	       wrap-sf-input-stream
+	       unwrap-sf-input-stream
+	       sf-input-stream-*))

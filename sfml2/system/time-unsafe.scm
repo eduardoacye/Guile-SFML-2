@@ -13,6 +13,7 @@
   #:export (sf-time
 	    pointer->sf-time
 	    sf-time->pointer
+	    sf-time-*
 	    %sf-time-as-seconds
 	    %sf-time-as-milliseconds
 	    %sf-time-as-microseconds
@@ -28,6 +29,9 @@
 
 (define (sf-time->pointer lst-struct)
   (make-c-struct sf-time lst-struct))
+
+;;; Alias for sfTime*
+(define sf-time-* '*)
 
 ;;; binding functions
 (define-ff %sf-time-as-seconds
