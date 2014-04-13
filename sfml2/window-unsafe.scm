@@ -21,6 +21,7 @@
 	       sf-context?
 	       wrap-sf-context
 	       unwrap-sf-context
+	       sf-context-*
 	       %sf-context-create
 	       %sf-context-destroy
 	       %sf-context-set-active
@@ -74,6 +75,7 @@
 	       sf-event
 	       pointer->sf-event
 	       sf-event->pointer
+	       sf-event-*
 	       ;; From sfml2/window/joystick-unsafe.scm
 	       sf-joystick-count
 	       sf-joystick-button-count
@@ -211,11 +213,13 @@
 	       sf-video-mode
 	       pointer->sf-video-mode
 	       sf-video-mode->pointer
+	       sf-video-mode-*
 	       %sf-video-mode-get-desktop-mode
 	       %sf-video-mode-get-fullscreen-modes
 	       %sf-video-mode-is-valid
 	       ;; From sfml2/window/window-handle-unsafe.scm
 	       sf-window-handle
+	       sf-window-handle-*
 	       ;; From sfml2/window/window-unsafe.scm
 	       sf-window-style
 	       sf-none
@@ -227,9 +231,11 @@
 	       sf-window?
 	       wrap-sf-window
 	       unwrap-sf-window
+	       sf-window-*
 	       sf-context-settings
 	       pointer->sf-context-settings
 	       sf-context-settings->pointer
+	       sf-context-settings-*
 	       %sf-window-create
 	       %sf-window-create-unicode
 	       %sf-window-create-from-handle

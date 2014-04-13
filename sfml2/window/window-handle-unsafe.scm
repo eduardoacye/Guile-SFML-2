@@ -10,7 +10,11 @@
 
 (define-module (sfml2 window window-handle-unsafe)
   #:use-module (system foreign)
-  #:export (sf-window-handle))
+  #:export (sf-window-handle
+	    sf-window-handle-*))
 
 ;;; sf-window-handle type on Unix - X11
 (define sf-window-handle unsigned-long)
+
+;;; Alias for the sfWindowHandle*
+(define sf-window-handle-* '*)

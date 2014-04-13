@@ -25,6 +25,7 @@
 	    sf-window?
 	    wrap-sf-window
 	    unwrap-sf-window
+	    sf-window-*
 	    sf-context-settings
 	    pointer->sf-context-settings
 	    sf-context-settings->pointer
@@ -69,12 +70,17 @@
   (lambda (w port)
     (display "<sf-window>" port)))
 
+;;; Alias for the sfWindow*
+(define sf-window-* '*)
+
 ;;; structure binding for the sfContextSettings simple structure
 (define sf-context-settings (list unsigned-int
 				  unsigned-int
 				  unsigned-int
 				  unsigned-int
 				  unsigned-int))
+
+;;; Alias for the sfContextSettings*
 (define sf-context-settings-* '*)
 
 (define (pointer->sf-context-settings c-struct)
@@ -85,88 +91,87 @@
 
 ;;; binding functions
 (define-ff %sf-window-create
-           '* sfWindow_create (list sf-video-mode
-				    '*	; const char *
-				    sf-window-style
-				    sf-context-settings-*))
+           sf-window-* sfWindow_create (list sf-video-mode
+					     char-*
+					     sf-window-style
+					     sf-context-settings-*))
 
 (define-ff %sf-window-create-unicode
-           '* sfWindow_createUnicode (list sf-video-mode
-					   '* ; uint32 pointer
-					   sf-window-style
-					   sf-context-settings-*))
+           sf-window-* sfWindow_createUnicode (list sf-video-mode
+						    uint32-*
+						    sf-window-style
+						    sf-context-settings-*))
 
 ;;; sf-context-settings should be passed as a pointer
 (define-ff %sf-window-create-from-handle
-           '* sfWindow_createFromHandle (list sf-window-handle
-					      sf-context-settings-*))
+           sf-window-* sfWindow_createFromHandle (list sf-window-handle
+						       sf-context-settings-*))
 
 (define-ff %sf-window-destroy
-           void sfWindow_destroy (list '*))
+           void sfWindow_destroy (list sf-window-*))
 
 (define-ff %sf-window-close
-           void sfWindow_close (list '*))
+           void sfWindow_close (list sf-window-*))
 
 (define-ff %sf-window-is-open
-           sf-bool sfWindow_isOpen (list '*))
+           sf-bool sfWindow_isOpen (list sf-window-*))
 
 (define-ff %sf-window-get-settings
-           sf-context-settings sfWindow_getSettings (list '*))
+           sf-context-settings sfWindow_getSettings (list sf-window-*))
 
-;;; sf-event should be passed as a pointer
 (define-ff %sf-window-poll-event
-           sf-bool sfWindow_pollEvent (list '* '*))
+           sf-bool sfWindow_pollEvent (list sf-window-* sf-event-*))
 
 (define-ff %sf-window-wait-event
-           sf-bool sfWindow_waitEvent (list '* sf-event))
+           sf-bool sfWindow_waitEvent (list sf-window-* sf-event-*))
 
 (define-ff %sf-window-get-position
-           sf-vector2i sfWindow_getPosition (list '*))
+           sf-vector2i sfWindow_getPosition (list sf-window-*))
 
 (define-ff %sf-window-set-position
-           void sfWindow_setPosition (list '* sf-vector2i))
+           void sfWindow_setPosition (list sf-window-* sf-vector2i))
 
 (define-ff %sf-window-get-size
-           sf-vector2u sfWindow_getSize (list '*))
+           sf-vector2u sfWindow_getSize (list sf-window-*))
 
 (define-ff %sf-window-set-title
-           void sfWindow_setTitle (list '*
-					'*)) ; const char *
+           void sfWindow_setTitle (list sf-window-*
+					char-*))
 
 (define-ff %sf-window-set-unicode-title
-           void sfWindow_setUnicodeTitle (list '*
-					       '*)) ; const uint32 *
+           void sfWindow_setUnicodeTitle (list sf-window-*
+					       uint32-*))
 
 (define-ff %sf-window-set-icon
-           void sfWindow_setIcon (list '*
+           void sfWindow_setIcon (list sf-window-*
 				       unsigned-int
 				       unsigned-int
-				       '*)) ; const uint8 *
+				       uint8-*))
 
 (define-ff %sf-window-set-visible
-           void sfWindow_setVisible (list '* sf-bool))
+           void sfWindow_setVisible (list sf-window-* sf-bool))
 
 (define-ff %sf-window-set-mouse-cursor-visible
-           void sfWindow_setMouseCursorVisible (list '* sf-bool))
+           void sfWindow_setMouseCursorVisible (list sf-window-* sf-bool))
 
 (define-ff %sf-window-set-vertical-sync-enabled
-           void sfWindow_setVerticalSyncEnabled (list '*
+           void sfWindow_setVerticalSyncEnabled (list sf-window-*
 						      sf-bool))
 
 (define-ff %sf-window-set-key-repeat-enabled
-           void sfWindow_setKeyRepeatEnabled (list '* sf-bool))
+           void sfWindow_setKeyRepeatEnabled (list sf-window-* sf-bool))
 
 (define-ff %sf-window-set-active
-           sf-bool sfWindow_setKeyRepeatEnabled (list '* sf-bool))
+           sf-bool sfWindow_setKeyRepeatEnabled (list sf-window-* sf-bool))
 
 (define-ff %sf-window-display
-           void sfWindow_display (list '*))
+           void sfWindow_display (list sf-window*))
 
 (define-ff %sf-window-set-framerate-limit
-           void sfWindow_setFramerateLimit (list '* unsigned-int))
+           void sfWindow_setFramerateLimit (list sf-window-* unsigned-int))
 
 (define-ff %sf-window-set-joystick-threshold
-           void sfWindow_setJoystickThreshold (list '* float))
+           void sfWindow_setJoystickThreshold (list sf-window-* float))
 
 (define-ff %sf-window-get-system-handle
-           sf-window-handle sfWindow_getSystemHandle (list '*))
+           sf-window-handle sfWindow_getSystemHandle (list sf-window-*))

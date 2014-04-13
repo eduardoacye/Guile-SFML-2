@@ -19,6 +19,9 @@
 	    sf-mouse-x-button-2
 	    sf-mouse-button-count))
 
+;;; Alias for the sfWindow*
+(define sf-window-* '*)
+
 ;;; enum binding for sfMouseButton
 (define sf-mouse-button int)
 
@@ -34,7 +37,7 @@
            sf-bool sfMouse_isButtonPressed (list sf-mouse-button))
 
 (define-ff %sf-mouse-get-position
-           sf-vector2i sfMouse_getPosition (list '*))
+           sf-vector2i sfMouse_getPosition (list sf-window-*))
 
 (define-ff %sf-mouse-set-position
-           void sfMouse_setPosition (list sf-vector2i '*))
+           void sfMouse_setPosition (list sf-vector2i sf-window-*))

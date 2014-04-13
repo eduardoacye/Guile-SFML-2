@@ -26,12 +26,15 @@
   (lambda (c port)
     (display "<sf-context>" port)))
 
+;;; Alias for sfContext*
+(define sf-context-* '*)
+
 ;;; binding functions
 (define-ff %sf-context-create
-           '* sfContext_create (list))
+           sf-context-* sfContext_create (list))
 
 (define-ff %sf-context-destroy
-           void sfContext_destroy (list '*))
+           void sfContext_destroy (list sf-context-*))
 
 (define-ff %sf-context-set-active
-           void sfContext_setActive (list '* sf-bool))
+           void sfContext_setActive (list sf-context-* sf-bool))

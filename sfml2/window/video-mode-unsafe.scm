@@ -14,6 +14,7 @@
   #:export (sf-video-mode
 	    pointer->sf-video-mode
 	    sf-video-mode->pointer
+	    sf-video-mode-*
 	    %sf-video-mode-get-desktop-mode
 	    %sf-video-mode-get-fullscreen-modes
 	    %sf-video-mode-is-valid))
@@ -26,6 +27,9 @@
 
 (define (sf-video-mode->pointer lst-struct)
   (make-c-struct sf-video-mode lst-struct))
+
+;;; Alias for the sfVideoMode*
+(define sf-video-mode-* '*)
 
 ;;; binding functions
 (define-ff %sf-video-mode-get-desktop-mode

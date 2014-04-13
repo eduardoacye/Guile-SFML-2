@@ -71,7 +71,8 @@
 
 	    sf-event
 	    pointer->sf-event
-	    sf-event->pointer))
+	    sf-event->pointer
+	    sf-event-*))
 
 ;;; enum binding for sfEventType
 (define sf-event-type int)
@@ -206,3 +207,6 @@
 
 (define (sf-event->pointer type lst-union)
   (make-c-union sf-event type lst-union))
+
+;;; Alias for the sfEvent*
+(define sf-event-* '*)
