@@ -1,3 +1,12 @@
+;;; 2014 EAY eduardo.acye@gmail.com
+
+;;;
+;;; file: sfml2/graphics/rectangle-shape-unsafe.scm
+;;; 
+;;; Module that exports the <sf-rectangle-shape> record and the associated
+;;; procedures.
+;;;
+
 (define-module (sfml2 graphics rectangle-shape-unsafe)
   #:use-module (system foreign)
   #:use-module (sfml2 utils)
@@ -45,12 +54,14 @@
 	    %sf-rectangle-shape-get-global-bounds)
   #:re-export (sf-rectangle-shape-*))
 
+;;; record for the sfRectangleShape opaque structure
 (define-wrapped-pointer-type <sf-rectangle-shape>
   sf-rectangle-shape?
   wrap-sf-rectangle-shape unwrap-sf-rectangle-shape
   (lambda (cs port)
     (display "<sf-rectangle-shape>" port)))
 
+;;; binding functions
 (define-ff %sf-rectangle-shape-create
   sf-rectangle-shape-* sfRectangleShape_create (list))
 

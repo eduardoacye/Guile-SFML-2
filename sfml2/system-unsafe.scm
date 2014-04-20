@@ -13,6 +13,7 @@
   #:use-module (sfml2 system sleep-unsafe)
   #:use-module (sfml2 system vector2-unsafe)
   #:use-module (sfml2 system vector3-unsafe)
+  #:use-module (sfml2 system input-stream-unsafe)
   #:re-export (;; From sfml2/system/time-unsafe.scm
 	       sf-time
 	       pointer->sf-time

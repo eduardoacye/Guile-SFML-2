@@ -1,3 +1,12 @@
+;;; 2014 EAY eduardo.acye@gmail.com
+
+;;;
+;;; file: sfml2/graphics/font-unsafe.scm
+;;; 
+;;; Module that exports the <sf-font> record and the associated
+;;; procedures.
+;;;
+
 (define-module (sfml2 graphics font-unsafe)
   #:use-module (system foreign)
   #:use-module (sfml2 utils)
@@ -19,13 +28,14 @@
 	    %sf-font-get-line-spacing)
   #:re-export (sf-font-*))
 
+;;; record for the sfFont opaque structure
 (define-wrapped-pointer-type <sf-font>
   sf-font?
   wrap-sf-font unwrap-sf-font
   (lambda (f port)
     (display "<sf-font>" port)))
 
-
+;;; binding functions
 (define-ff %sf-font-create-from-file
   sf-font-* sfFont_createFromFile (list char-*))
 

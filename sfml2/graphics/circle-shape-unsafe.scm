@@ -1,3 +1,12 @@
+;;; 2014 EAY eduardo.acye@gmail.com
+
+;;;
+;;; file: sfml2/graphics/circle-shape-unsafe.scm
+;;; 
+;;; Module that exports the <sf-circle-shape> record and the associated
+;;; procedures and enumerations
+;;;
+
 (define-module (sfml2 graphics circle-shape-unsafe)
   #:use-module (system foreign)
   #:use-module (sfml2 utils)
@@ -46,12 +55,14 @@
 	    %sf-circle-shape-get-global-bounds)
   #:re-export (sf-circle-shape-*))
 
+;;; record for the sfCircleShape opaque structure
 (define-wrapped-pointer-type <sf-circle-shape>
   sf-circle-shape?
   wrap-sf-circle-shape unwrap-sf-circle-shape
   (lambda (cs port)
     (display "<sf-circle-shape>" port)))
 
+;;; binding functions
 (define-ff %sf-circle-shape-create
   sf-circle-shape-* sfCircleShape_create (list))
 

@@ -1,3 +1,11 @@
+;;; 2014 EAY eduardo.acye@gmail.com
+
+;;;
+;;; file: sfml2/graphics/vertex-unsafe.scm
+;;; 
+;;; Module that exports the sf-vertex structure
+;;;
+
 (define-module (sfml2 graphics vertex-unsafe)
   #:use-module (system foreign)
   #:use-module (sfml2 utils)
@@ -9,7 +17,10 @@
 	    sf-vertex->pointer
 	    pointer->sf-vertex))
 
+;;; structure binding for the sfVertex simple structure
 (define sf-vertex (list sf-vector2f sf-color sf-vector2f))
+
+;;; alias for sfVertex*
 (define sf-vertex-* '*)
 
 (define (sf-vertex->pointer lst-struct)

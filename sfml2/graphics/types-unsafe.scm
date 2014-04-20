@@ -1,3 +1,11 @@
+;;; 2014 EAY eduardo.acye@gmail.com
+
+;;;
+;;; file: sfml2/graphics/types-unsafe.scm
+;;; 
+;;; Module that exports several aliases for opaque pointers
+;;;
+
 (define-module (sfml2 graphics types-unsafe)
   #:use-module (system foreign)
   #:use-module (sfml2 utils)
@@ -18,7 +26,7 @@
 	    sf-vertex-array-*
 	    sf-view-*))
 
-
+;;; aliases
 (define sf-circle-shape-* '*)
 (define sf-convex-shape-* '*)
 (define sf-font-* '*)

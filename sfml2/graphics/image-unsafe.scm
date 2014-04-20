@@ -1,3 +1,12 @@
+;;; 2014 EAY eduardo.acye@gmail.com
+
+;;;
+;;; file: sfml2/graphics/image-unsafe.scm
+;;; 
+;;; Module that exports the <sf-image> record and the associated
+;;; procedures.
+;;;
+
 (define-module (sfml2 graphics image-unsafe)
   #:use-module (system foreign)
   #:use-module (sfml2 utils)
@@ -30,12 +39,14 @@
 	    %sf-image-flip-vertically)
   #:re-export (sf-image-*))
 
+;;; record for the sfImage opaque structure
 (define-wrapped-pointer-type <sf-image>
   sf-image?
   wrap-sf-image unwrap-sf-image
   (lambda (i port)
     (display "<sf-image>" port)))
 
+;;; binding functions
 (define-ff %sf-image-create
   sf-image-* sfImage_create (list unsigned-int unsigned-int))
 

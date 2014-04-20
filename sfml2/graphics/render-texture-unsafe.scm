@@ -1,3 +1,12 @@
+;;; 2014 EAY eduardo.acye@gmail.com
+
+;;;
+;;; file: sfml2/graphics/render-texture-unsafe.scm
+;;; 
+;;; Module that exports the <sf-render-texture> record and the associated
+;;; procedures.
+;;;
+
 (define-module (sfml2 graphics render-texture-unsafe)
   #:use-module (system foreign)
   #:use-module (sfml2 utils)
@@ -43,14 +52,14 @@
 	    %sf-render-texture-is-repeated)
   #:re-export (sf-render-texture-*))
 
-
+;;; record for the sfRenderTexture opaque structure
 (define-wrapped-pointer-type <sf-render-texture>
   sf-render-texture?
   wrap-sf-render-texture unwrap-sf-render-texture
   (lambda (rt port)
     (display "<sf-render-texture>" port)))
 
-
+;;; binding functions
 (define-ff %sf-render-texture-create
   sf-render-texture-* sfRenderTexture_create (list unsigned-int unsigned-int sf-bool))
 

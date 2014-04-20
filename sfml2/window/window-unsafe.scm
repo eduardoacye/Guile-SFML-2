@@ -3,8 +3,8 @@
 ;;;
 ;;; file: sfml2/window/window-unsafe.scm
 ;;; 
-;;; Module that exports the <sf-window> record and the associated procedures
-;;; and enumerations
+;;; Module that exports the <sf-window> record and the associated
+;;; procedures and enumerations
 ;;;
 
 (define-module (sfml2 window window-unsafe)
@@ -92,87 +92,86 @@
 
 ;;; binding functions
 (define-ff %sf-window-create
-           sf-window-* sfWindow_create (list sf-video-mode
-					     char-*
-					     sf-window-style
-					     sf-context-settings-*))
+  sf-window-* sfWindow_create (list sf-video-mode
+				    char-*
+				    sf-window-style
+				    sf-context-settings-*))
 
 (define-ff %sf-window-create-unicode
-           sf-window-* sfWindow_createUnicode (list sf-video-mode
-						    uint32-*
-						    sf-window-style
-						    sf-context-settings-*))
+  sf-window-* sfWindow_createUnicode (list sf-video-mode
+					   uint32-*
+					   sf-window-style
+					   sf-context-settings-*))
 
-;;; sf-context-settings should be passed as a pointer
 (define-ff %sf-window-create-from-handle
-           sf-window-* sfWindow_createFromHandle (list sf-window-handle
-						       sf-context-settings-*))
+  sf-window-* sfWindow_createFromHandle (list sf-window-handle
+					      sf-context-settings-*))
 
 (define-ff %sf-window-destroy
-           void sfWindow_destroy (list sf-window-*))
+  void sfWindow_destroy (list sf-window-*))
 
 (define-ff %sf-window-close
-           void sfWindow_close (list sf-window-*))
+  void sfWindow_close (list sf-window-*))
 
 (define-ff %sf-window-is-open
-           sf-bool sfWindow_isOpen (list sf-window-*))
+  sf-bool sfWindow_isOpen (list sf-window-*))
 
 (define-ff %sf-window-get-settings
-           sf-context-settings sfWindow_getSettings (list sf-window-*))
+  sf-context-settings sfWindow_getSettings (list sf-window-*))
 
 (define-ff %sf-window-poll-event
-           sf-bool sfWindow_pollEvent (list sf-window-* sf-event-*))
+  sf-bool sfWindow_pollEvent (list sf-window-* sf-event-*))
 
 (define-ff %sf-window-wait-event
-           sf-bool sfWindow_waitEvent (list sf-window-* sf-event-*))
+  sf-bool sfWindow_waitEvent (list sf-window-* sf-event-*))
 
 (define-ff %sf-window-get-position
-           sf-vector2i sfWindow_getPosition (list sf-window-*))
+  sf-vector2i sfWindow_getPosition (list sf-window-*))
 
 (define-ff %sf-window-set-position
-           void sfWindow_setPosition (list sf-window-* sf-vector2i))
+  void sfWindow_setPosition (list sf-window-* sf-vector2i))
 
 (define-ff %sf-window-get-size
-           sf-vector2u sfWindow_getSize (list sf-window-*))
+  sf-vector2u sfWindow_getSize (list sf-window-*))
 
 (define-ff %sf-window-set-title
-           void sfWindow_setTitle (list sf-window-*
-					char-*))
+  void sfWindow_setTitle (list sf-window-*
+			       char-*))
 
 (define-ff %sf-window-set-unicode-title
-           void sfWindow_setUnicodeTitle (list sf-window-*
-					       uint32-*))
+  void sfWindow_setUnicodeTitle (list sf-window-*
+				      uint32-*))
 
 (define-ff %sf-window-set-icon
-           void sfWindow_setIcon (list sf-window-*
-				       unsigned-int
-				       unsigned-int
-				       uint8-*))
+  void sfWindow_setIcon (list sf-window-*
+			      unsigned-int
+			      unsigned-int
+			      uint8-*))
 
 (define-ff %sf-window-set-visible
-           void sfWindow_setVisible (list sf-window-* sf-bool))
+  void sfWindow_setVisible (list sf-window-* sf-bool))
 
 (define-ff %sf-window-set-mouse-cursor-visible
-           void sfWindow_setMouseCursorVisible (list sf-window-* sf-bool))
+  void sfWindow_setMouseCursorVisible (list sf-window-* sf-bool))
 
 (define-ff %sf-window-set-vertical-sync-enabled
-           void sfWindow_setVerticalSyncEnabled (list sf-window-*
-						      sf-bool))
+  void sfWindow_setVerticalSyncEnabled (list sf-window-*
+					     sf-bool))
 
 (define-ff %sf-window-set-key-repeat-enabled
-           void sfWindow_setKeyRepeatEnabled (list sf-window-* sf-bool))
+  void sfWindow_setKeyRepeatEnabled (list sf-window-* sf-bool))
 
 (define-ff %sf-window-set-active
-           sf-bool sfWindow_setKeyRepeatEnabled (list sf-window-* sf-bool))
+  sf-bool sfWindow_setKeyRepeatEnabled (list sf-window-* sf-bool))
 
 (define-ff %sf-window-display
-           void sfWindow_display (list sf-window-*))
+  void sfWindow_display (list sf-window-*))
 
 (define-ff %sf-window-set-framerate-limit
-           void sfWindow_setFramerateLimit (list sf-window-* unsigned-int))
+  void sfWindow_setFramerateLimit (list sf-window-* unsigned-int))
 
 (define-ff %sf-window-set-joystick-threshold
-           void sfWindow_setJoystickThreshold (list sf-window-* float))
+  void sfWindow_setJoystickThreshold (list sf-window-* float))
 
 (define-ff %sf-window-get-system-handle
-           sf-window-handle sfWindow_getSystemHandle (list sf-window-*))
+  sf-window-handle sfWindow_getSystemHandle (list sf-window-*))

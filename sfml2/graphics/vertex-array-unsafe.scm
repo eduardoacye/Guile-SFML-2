@@ -1,3 +1,12 @@
+;;; 2014 EAY eduardo.acye@gmail.com
+
+;;;
+;;; file: sfml2/graphics/vertex-array-unsafe.scm
+;;; 
+;;; Module that exports the <sf-vertex-array> record and the associated
+;;; procedures.
+;;;
+
 (define-module (sfml2 graphics vertex-array-unsafe)
   #:use-module (system foreign)
   #:use-module (sfml2 utils)
@@ -23,32 +32,44 @@
 	    %sf-vertex-array-get-bounds)
   #:re-export (sf-vertex-array-*))
 
+;;; record for the sfVertexArray opaque structure
 (define-wrapped-pointer-type <sf-vertex-array>
   sf-vertex-array?
   wrap-sf-vertex-array unwrap-sf-vertex-array
   (lambda (va port)
     (display "<sf-vertex-array>" port)))
 
+;;; binding functions
 (define-ff %sf-vertex-array-create
   sf-vertex-array-* sfVertexArray_create (list))
+
 (define-ff %sf-vertex-array-copy
   sf-vertex-array-* sfVertexArray_copy (list sf-vertex-array-*))
+
 (define-ff %sf-vertex-array-destroy
   void sfVertexArray_destroy (list sf-vertex-array-*))
+
 (define-ff %sf-vertex-array-get-vertex-count
   unsigned-int sfVertexArray_getVertexCount (list sf-vertex-array-*))
+
 (define-ff %sf-vertex-array-get-vertex
   sf-vertex-* sfVertexArray_getVertex (list sf-vertex-array-* unsigned-int))
+
 (define-ff %sf-vertex-array-clear
   void sfVertexArray_clear (list sf-vertex-array-*))
+
 (define-ff %sf-vertex-array-resize
   void sfVertexArray_resize (list sf-vertex-array-* unsigned-int))
+
 (define-ff %sf-vertex-array-append
   void sfVertexArray_append (list sf-vertex-array-* sf-vertex))
+
 (define-ff %sf-vertex-array-set-primitive-type
   void sfVertexArray_setPrimitiveType (list sf-vertex-array-* sf-primitive-type))
+
 (define-ff %sf-vertex-array-get-primitive-type
   sf-primitive-type sfVertexArray_getPrimitiveType (list sf-vertex-array-*))
+
 (define-ff %sf-vertex-array-get-bounds
   sf-float-rect sfVertexArray_getBounds (list sf-vertex-array-*))
 

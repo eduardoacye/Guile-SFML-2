@@ -1,3 +1,12 @@
+;;; 2014 EAY eduardo.acye@gmail.com
+
+;;;
+;;; file: sfml2/graphics/convex-shape-unsafe.scm
+;;; 
+;;; Module that exports the <sf-convex-shape> record and the associated
+;;; procedures.
+;;;
+
 (define-module (sfml2 graphics convex-shape-unsafe)
   #:use-module (system foreign)
   #:use-module (sfml2 utils)
@@ -45,12 +54,14 @@
 	    %sf-convex-shape-get-global-bounds)
   #:re-export (sf-convex-shape-*))
 
+;;; record for the sfConvexShape opaque structure
 (define-wrapped-pointer-type <sf-convex-shape>
   sf-convex-shape?
   wrap-sf-convex-shape unwrap-sf-convex-shape
   (lambda (cs port)
     (display "<sf-convex-shape>" port)))
 
+;;; binding functions
 (define-ff %sf-convex-shape-create
   sf-convex-shape-* sfConvexShape_create (list))
 

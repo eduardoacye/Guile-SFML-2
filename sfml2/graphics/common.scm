@@ -1,3 +1,12 @@
+;;; 2014 EAY eduardo.acye@gmail.com
+
+;;;
+;;; file: sfml2/graphics/common.scm
+;;; 
+;;; Module that exports the macros and procedures that the graphics sub-
+;;; library uses
+;;; 
+
 (define-module (sfml2 graphics common)
   #:use-module (system foreign)
   #:use-module (sfml2 utils)

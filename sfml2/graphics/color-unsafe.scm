@@ -1,3 +1,12 @@
+;;; 2014 EAY eduardo.acye@gmail.com
+
+;;;
+;;; file: sfml2/graphics/color-unsafe.scm
+;;; 
+;;; Module that exports the sf-color structure and the associated
+;;; procedures.
+;;;
+
 (define-module (sfml2 graphics color-unsafe)
   #:use-module (system foreign)
   #:use-module (sfml2 utils)
@@ -11,7 +20,10 @@
 	    %sf-color-add
 	    %sf-color-modulate))
 
+;;; structure binding for the sfColor simple structure
 (define sf-color (list uint8 uint8 uint8 uint8))
+
+;;; Alias for the sfColor*
 (define sf-color-* '*)
 
 (define (pointer->sf-color c-struct)
@@ -19,6 +31,7 @@
 (define (sf-color->pointer lst-struct)
   (make-c-struct sf-color lst-struct))
 
+;;; binding functions
 (define-ff %sf-color-from-rgb
   sf-color sfColor_fromRGB (list uint8 uint8 uint8))
 

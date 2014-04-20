@@ -1,3 +1,12 @@
+;;; 2014 EAY eduardo.acye@gmail.com
+
+;;;
+;;; file: sfml2/graphics/shape-unsafe.scm
+;;; 
+;;; Module that exports the <sf-shape> record and the associated
+;;; procedures.
+;;;
+
 (define-module (sfml2 graphics shape-unsafe)
   #:use-module (system foreign)
   #:use-module (sfml2 utils)
@@ -38,12 +47,21 @@
 	    %sf-shape-update)
   #:re-export (sf-shape-*))
 
+;;; record for the sfShape opaque structure
 (define-wrapped-pointer-type <sf-shape>
   sf-shape?
   wrap-sf-shape unwrap-sf-shape
   (lambda (s port)
     (display "<sf-shape>" port)))
 
+;;; binding functions
+;;; the arguments for sfShape_create are:
+;;; - sfShapeGetPointCountCallback
+;;; - sfShapeGetPointCallback
+;;; - void *
+;;; where:
+;;; - typedef unsigned int (*sfShapeGetPointCountCallback)(void*)
+;;; - typedef sfVector2f (*sfShapeGetPointCallback)(unsigned int, void*)
 (define-ff %sf-shape-create
   sf-shape-* sfShape_create (list '* '* '*))
 

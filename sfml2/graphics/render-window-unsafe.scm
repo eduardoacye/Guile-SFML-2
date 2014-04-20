@@ -1,3 +1,12 @@
+;;; 2014 EAY eduardo.acye@gmail.com
+
+;;;
+;;; file: sfml2/graphics/render-window-unsafe.scm
+;;; 
+;;; Module that exports the <sf-render-window> record and the associated
+;;; procedures.
+;;;
+
 (define-module (sfml2 graphics render-window-unsafe)
   #:use-module (system foreign)
   #:use-module (sfml2 utils)
@@ -65,13 +74,14 @@
 	    %sf-mouse-set-position-render-window)
   #:re-export (sf-render-window-*))
 
+;;; record for the sfRenderWindow opaque structure
 (define-wrapped-pointer-type <sf-render-window>
   sf-render-window?
   wrap-sf-render-window unwrap-sf-render-window
   (lambda (rw port)
     (display "<sf-render-window>" port)))
 
-
+;;; binding functions
 (define-ff %sf-render-window-create
   sf-render-window-* sfRenderWindow_create (list sf-video-mode char-* sf-window-style sf-context-settings-*))
 

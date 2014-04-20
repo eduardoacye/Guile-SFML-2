@@ -1,3 +1,12 @@
+;;; 2014 EAY eduardo.acye@gmail.com
+
+;;;
+;;; file: sfml2/graphics/shader-unsafe.scm
+;;; 
+;;; Module that exports the <sf-shader> record and the associated
+;;; procedures
+;;;
+
 (define-module (sfml2 graphics shader-unsafe)
   #:use-module (system foreign)
   #:use-module (sfml2 utils)
@@ -30,12 +39,14 @@
 	    %sf-shader-is-available)
   #:re-export (sf-shader-*))
 
+;;; record for the sfShader opaque structure
 (define-wrapped-pointer-type <sf-shader>
   sf-shader?
   wrap-sf-shader unwrap-sf-shader
   (lambda (s port)
     (display "<sf-shader>" port)))
 
+;;; binding functions
 (define-ff %sf-shader-create-from-file
   sf-shader-* sfShader_createFromFile (list char-* char-*))
 

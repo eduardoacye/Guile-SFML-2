@@ -1,0 +1,545 @@
+;;; 2014 EAY eduardo.acye@gmail.com
+
+;;;
+;;; file: sfml2/graphics-unsafe.scm
+;;; 
+;;; Module that exports all the sfml2/graphics procedures, structures and
+;;; records.
+;;;
+
+(define-module (sfml2 graphics-unsafe)
+  #:use-module (sfml2 graphics blend-mode-unsafe)
+  #:use-module (sfml2 graphics circle-shape-unsafe)
+  #:use-module (sfml2 graphics color-unsafe)
+  #:use-module (sfml2 graphics convex-shape-unsafe)
+  #:use-module (sfml2 graphics font-unsafe)
+  #:use-module (sfml2 graphics glyph-unsafe)
+  #:use-module (sfml2 graphics image-unsafe)
+  #:use-module (sfml2 graphics primitive-type-unsafe)
+  #:use-module (sfml2 graphics rect-unsafe)
+  #:use-module (sfml2 graphics rectangle-shape-unsafe)
+  #:use-module (sfml2 graphics render-states-unsafe)
+  #:use-module (sfml2 graphics render-texture-unsafe)
+  #:use-module (sfml2 graphics render-window-unsafe)
+  #:use-module (sfml2 graphics shader-unsafe)
+  #:use-module (sfml2 graphics shape-unsafe)
+  #:use-module (sfml2 graphics sprite-unsafe)
+  #:use-module (sfml2 graphics text-unsafe)
+  #:use-module (sfml2 graphics texture-unsafe)
+  #:use-module (sfml2 graphics transform-unsafe)
+  #:use-module (sfml2 graphics transformable-unsafe)
+  #:use-module (sfml2 graphics vertex-array-unsafe)
+  #:use-module (sfml2 graphics vertex-unsafe)
+  #:use-module (sfml2 graphics view-unsafe)
+  #:re-export (;; From sfml2/graphics/blend-mode-unsafe.scm
+	       sf-blend-mode
+	       sf-blend-alpha
+	       sf-blend-add
+	       sf-blend-multiply
+	       sf-blend-none
+	       ;; From sfml2/graphics/circle-shape-unsafe
+	       <sf-circle-shape>
+	       sf-circle-shape?
+	       wrap-sf-circle-shape
+	       unwrap-sf-circle-shape
+	       %sf-circle-shape-create
+	       %sf-circle-shape-copy
+	       %sf-circle-shape-destroy
+	       %sf-circle-shape-set-position
+	       %sf-circle-shape-set-rotation
+	       %sf-circle-shape-set-scale
+	       %sf-circle-shape-set-origin
+	       %sf-circle-shape-get-position
+	       %sf-circle-shape-get-rotation
+	       %sf-circle-shape-get-scale
+	       %sf-circle-shape-get-origin
+	       %sf-circle-shape-move
+	       %sf-circle-shape-rotate
+	       %sf-circle-shape-scale
+	       %sf-circle-shape-get-transform
+	       %sf-circle-shape-get-inverse-transform
+	       %sf-circle-shape-set-texture
+	       %sf-circle-shape-set-texture-rect
+	       %sf-circle-shape-set-fill-color
+	       %sf-circle-shape-set-outline-color
+	       %sf-circle-shape-set-outline-thickness
+	       %sf-circle-shape-get-texture
+	       %sf-circle-shape-get-texture-rect
+	       %sf-circle-shape-get-fill-color
+	       %sf-circle-shape-get-outline-color
+	       %sf-circle-shape-get-outline-thickness
+	       %sf-circle-shape-get-point-count
+	       %sf-circle-shape-get-point
+	       %sf-circle-shape-set-radius
+	       %sf-circle-shape-get-radius
+	       %sf-circle-shape-set-point-count
+	       %sf-circle-shape-get-local-bounds
+	       %sf-circle-shape-get-global-bounds
+	       sf-circle-shape-*
+	       ;; From sfml2/graphics/color-unsafe.scm
+	       sf-color
+	       sf-color-*
+	       pointer->sf-color
+	       sf-color->pointer
+	       %sf-color-from-rgb
+	       %sf-color-from-rgba
+	       %sf-color-add
+	       %sf-color-modulate
+	       ;; From sfml2/graphics/convex-shape-unsafe.scm
+	       <sf-convex-shape>
+	       sf-convex-shape?
+	       wrap-sf-convex-shape
+	       unwrap-sf-convex-shape
+	       %sf-convex-shape-create
+	       %sf-convex-shape-copy
+	       %sf-convex-shape-destroy
+	       %sf-convex-shape-set-position
+	       %sf-convex-shape-set-rotation
+	       %sf-convex-shape-set-scale
+	       %sf-convex-shape-set-origin
+	       %sf-convex-shape-get-position
+	       %sf-convex-shape-get-rotation
+	       %sf-convex-shape-get-scale
+	       %sf-convex-shape-get-origin
+	       %sf-convex-shape-move
+	       %sf-convex-shape-rotate
+	       %sf-convex-shape-scale
+	       %sf-convex-shape-get-transform
+	       %sf-convex-shape-get-inverse-transform
+	       %sf-convex-shape-set-texture
+	       %sf-convex-shape-set-texture-rect
+	       %sf-convex-shape-set-fill-color
+	       %sf-convex-shape-set-outline-color
+	       %sf-convex-shape-set-outline-thickness
+	       %sf-convex-shape-get-texture
+	       %sf-convex-shape-get-texture-rect
+	       %sf-convex-shape-get-fill-color
+	       %sf-convex-shape-get-outline-color
+	       %sf-convex-shape-get-outline-thickness
+	       %sf-convex-shape-get-point-count
+	       %sf-convex-shape-get-point
+	       %sf-convex-shape-set-point
+	       %sf-convex-shape-set-point-count
+	       %sf-convex-shape-get-local-bounds
+	       %sf-convex-shape-get-global-bounds
+	       sf-convex-shape-*
+	       ;; From sfml2/graphics/font-unsafe.scm
+	       <sf-font>
+	       sf-font?
+	       wrap-sf-font
+	       unwrap-sf-font
+	       %sf-font-create-from-file
+	       %sf-font-create-from-memory
+	       %sf-font-create-from-stream
+	       %sf-font-copy
+	       %sf-font-destroy
+	       %sf-font-get-glyph
+	       %sf-font-get-kerning
+	       %sf-font-get-line-spacing
+	       sf-font-*
+	       ;; From sfml2/graphics/glyph-unsafe.scm
+	       sf-glyph
+	       sf-glyph-*
+	       pointer->sf-glyph
+	       sf-glyph->pointer
+	       ;; From sfml2/graphics/image-unsafe.scm
+	       <sf-image>
+	       sf-image?
+	       wrap-sf-image
+	       unwrap-sf-image
+	       %sf-image-create
+	       %sf-image-create-from-color
+	       %sf-image-create-from-pixels
+	       %sf-image-create-from-file
+	       %sf-image-create-from-memory
+	       %sf-image-create-from-stream
+	       %sf-image-copy
+	       %sf-image-destroy
+	       %sf-image-save-to-file
+	       %sf-image-get-size
+	       %sf-image-create-mask-from-color
+	       %sf-image-copy-image
+	       %sf-image-set-pixel
+	       %sf-image-get-pixel
+	       %sf-image-get-pixels-ptr
+	       %sf-image-flip-horizontally
+	       %sf-image-flip-vertically
+	       sf-image-*
+	       ;; From sfml2/graphics/primitive-type-unsafe.scm
+	       sf-primitive-type
+	       sf-points
+	       sf-lines
+	       sf-lines-strip
+	       sf-triangles
+	       sf-triangles-strip
+	       sf-triangles-fan
+	       sf-quads
+	       ;; From sfml2/graphics/rect-unsafe.scm
+	       sf-float-rect
+	       sf-float-rect-*
+	       pointer->sf-float-rect
+	       sf-float-rect->pointer
+	       sf-int-rect
+	       sf-int-rect-*
+	       pointer->sf-int-rect
+	       sf-int-rect->pointer
+	       %sf-float-rect-contains
+	       %sf-int-rect-contains
+	       %sf-float-rect-intersects
+	       %sf-int-rect-intersects
+	       ;; From sfml2/graphics/rectangle-shape-unsafe.scm
+	       <sf-rectangle-shape>
+	       sf-rectangle-shape?
+	       wrap-sf-rectangle-shape
+	       unwrap-sf-rectangle-shape
+	       %sf-rectangle-shape-create
+	       %sf-rectangle-shape-copy
+	       %sf-rectangle-shape-destroy
+	       %sf-rectangle-shape-set-position
+	       %sf-rectangle-shape-set-rotation
+	       %sf-rectangle-shape-set-scale
+	       %sf-rectangle-shape-set-origin
+	       %sf-rectangle-shape-get-position
+	       %sf-rectangle-shape-get-rotation
+	       %sf-rectangle-shape-get-scale
+	       %sf-rectangle-shape-get-origin
+	       %sf-rectangle-shape-move
+	       %sf-rectangle-shape-rotate
+	       %sf-rectangle-shape-scale
+	       %sf-rectangle-shape-get-transform
+	       %sf-rectangle-shape-get-inverse-transform
+	       %sf-rectangle-shape-set-texture
+	       %sf-rectangle-shape-set-texture-rect
+	       %sf-rectangle-shape-set-fill-color
+	       %sf-rectangle-shape-set-outline-color
+	       %sf-rectangle-shape-set-outline-thickness
+	       %sf-rectangle-shape-get-texture
+	       %sf-rectangle-shape-get-texture-rect
+	       %sf-rectangle-shape-get-fill-color
+	       %sf-rectangle-shape-get-outline-color
+	       %sf-rectangle-shape-get-outline-thickness
+	       %sf-rectangle-shape-get-point-count
+	       %sf-rectangle-shape-get-point
+	       %sf-rectangle-shape-set-size
+	       %sf-rectangle-shape-get-size
+	       %sf-rectangle-shape-get-local-bounds
+	       %sf-rectangle-shape-get-global-bounds
+	       sf-rectangle-shape-*
+	       ;; From sfml2/graphics/render-states-unsafe.scm
+	       sf-render-states
+	       sf-render-states-*
+	       sf-render-states->pointer
+	       pointer->sf-render-states
+	       ;; From sfml2/graphics/render-texture-unsafe.scm
+	       <sf-render-texture>
+	       sf-render-texture?
+	       wrap-sf-render-texture
+	       unwrap-sf-render-texture
+	       %sf-render-texture-create
+	       %sf-render-texture-destroy
+	       %sf-render-texture-get-size
+	       %sf-render-texture-set-active
+	       %sf-render-texture-display
+	       %sf-render-texture-clear
+	       %sf-render-texture-set-view
+	       %sf-render-texture-get-view
+	       %sf-render-texture-get-default-view
+	       %sf-render-texture-get-viewport
+	       %sf-render-texture-map-pixel-to-coords
+	       %sf-render-texture-map-coords-to-pixel
+	       %sf-render-texture-draw-sprite
+	       %sf-render-texture-draw-text
+	       %sf-render-texture-draw-shape
+	       %sf-render-texture-draw-circle-shape
+	       %sf-render-texture-draw-convex-shape
+	       %sf-render-texture-draw-rectangle-shape
+	       %sf-render-texture-draw-vertex-array
+	       %sf-render-texture-draw-primitives
+	       %sf-render-texture-push-gl-states
+	       %sf-render-texture-pop-gl-states
+	       %sf-render-texture-reset-gl-states
+	       %sf-render-texture-get-texture
+	       %sf-render-texture-set-smooth
+	       %sf-render-texture-is-smooth
+	       %sf-render-texture-set-repeated
+	       %sf-render-texture-is-repeated
+	       sf-render-texture-*
+	       ;; From sfml2/graphics/render-window-unsafe.scm
+	       <sf-render-window>
+	       sf-render-window?
+	       wrap-sf-render-window
+	       unwrap-sf-render-window
+	       %sf-render-window-create
+	       %sf-render-window-create-unicode
+	       %sf-render-window-create-from-handle
+	       %sf-render-window-destroy
+	       %sf-render-window-close
+	       %sf-render-window-is-open
+	       %sf-render-window-get-settings
+	       %sf-render-window-poll-event
+	       %sf-render-window-wait-event
+	       %sf-render-window-get-position
+	       %sf-render-window-set-position
+	       %sf-render-window-get-size
+	       %sf-render-window-set-size
+	       %sf-render-window-set-title
+	       %sf-render-window-set-unicode-title
+	       %sf-render-window-set-icon
+	       %sf-render-window-set-visible
+	       %sf-render-window-set-mouse-cursor-visible
+	       %sf-render-window-set-vertical-sync-enabled
+	       %sf-render-window-set-key-repeat-enabled
+	       %sf-render-window-set-active
+	       %sf-render-window-display
+	       %sf-render-window-set-framerate-limit
+	       %sf-render-window-set-joystick-threshold
+	       %sf-render-window-get-system-handle
+	       %sf-render-window-clear
+	       %sf-render-window-set-view
+	       %sf-render-window-get-view
+	       %sf-render-window-get-default-view
+	       %sf-render-window-get-viewport
+	       %sf-render-window-map-pixel-to-coords
+	       %sf-render-window-map-coords-to-pixel
+	       %sf-render-window-draw-sprite
+	       %sf-render-window-draw-text
+	       %sf-render-window-draw-shape
+	       %sf-render-window-draw-circle-shape
+	       %sf-render-window-draw-convex-shape
+	       %sf-render-window-draw-rectangle-shape
+	       %sf-render-window-draw-vertex-array
+	       %sf-render-window-draw-primitives
+	       %sf-render-window-push-gl-states
+	       %sf-render-window-pop-gl-states
+	       %sf-render-window-reset-gl-states
+	       %sf-render-window-capture
+	       %sf-mouse-get-position-render-window
+	       %sf-mouse-set-position-render-window
+	       sf-render-window-*
+	       ;; From sfml2/graphics/shader-unsafe.scm
+	       <sf-shader>
+	       sf-shader?
+	       wrap-sf-shader
+	       unwrap-sf-shader
+	       %sf-shader-create-from-file
+	       %sf-shader-create-from-memory
+	       %sf-shader-create-from-stream
+	       %sf-shader-destroy
+	       %sf-shader-set-float-parameter
+	       %sf-shader-set-float-2-parameter
+	       %sf-shader-set-float-3-parameter
+	       %sf-shader-set-float-4-parameter
+	       %sf-shader-set-vector2-parameter
+	       %sf-shader-set-vector3-parameter
+	       %sf-shader-set-color-parameter
+	       %sf-shader-set-transform-parameter
+	       %sf-shader-set-texture-parameter
+	       %sf-shader-set-current-texture-parameter
+	       %sf-shader-bind
+	       %sf-shader-is-available
+	       sf-shader-*
+	       ;; From sfml2/graphics/shape-unsafe.scm
+	       <sf-shape>
+	       sf-shape?
+	       wrap-sf-shape
+	       unwrap-sf-shape
+	       %sf-shape-create
+	       %sf-shape-destroy
+	       %sf-shape-set-position
+	       %sf-shape-set-rotation
+	       %sf-shape-set-scale
+	       %sf-shape-set-origin
+	       %sf-shape-get-position
+	       %sf-shape-get-rotation
+	       %sf-shape-get-scale
+	       %sf-shape-get-origin
+	       %sf-shape-move
+	       %sf-shape-rotate
+	       %sf-shape-scale
+	       %sf-shape-get-transform
+	       %sf-shape-get-inverse-transform
+	       %sf-shape-get-texture
+	       %sf-shape-get-texture-rect
+	       %sf-shape-get-fill-color
+	       %sf-shape-get-outline-color
+	       %sf-shape-get-outline-thickness
+	       %sf-shape-get-point-count
+	       %sf-shape-get-point
+	       %sf-shape-get-local-bounds
+	       %sf-shape-get-global-bounds
+	       %sf-shape-update
+	       sf-shape-*
+	       ;; From sfml2/graphics/sprite-unsafe.scm
+	       <sf-sprite>
+	       sf-sprite?
+	       wrap-sf-sprite
+	       unwrap-sf-sprite
+	       %sf-sprite-create
+	       %sf-sprite-copy
+	       %sf-sprite-destroy
+	       %sf-sprite-set-position
+	       %sf-sprite-set-rotation
+	       %sf-sprite-set-scale
+	       %sf-sprite-set-origin
+	       %sf-sprite-get-position
+	       %sf-sprite-get-rotation
+	       %sf-sprite-get-scale
+	       %sf-sprite-get-origin
+	       %sf-sprite-move
+	       %sf-sprite-rotate
+	       %sf-sprite-scale
+	       %sf-sprite-get-transform
+	       %sf-sprite-get-inverse-transform
+	       %sf-sprite-set-texture
+	       %sf-sprite-set-texture-rect
+	       %sf-sprite-set-color
+	       %sf-sprite-get-texture
+	       %sf-sprite-get-texture-rect
+	       %sf-sprite-get-color
+	       %sf-sprite-get-local-bounds
+	       %sf-sprite-get-global-bounds
+	       sf-sprite-*
+	       ;; From sfml2/graphics/text-unsafe.scm
+	       <sf-text>
+	       sf-text?
+	       wrap-sf-text
+	       unwrap-sf-text
+	       %sf-text-create
+	       %sf-text-copy
+	       %sf-text-destroy
+	       %sf-text-set-position
+	       %sf-text-set-rotation
+	       %sf-text-set-scale
+	       %sf-text-set-origin
+	       %sf-text-get-position
+	       %sf-text-get-rotation
+	       %sf-text-get-scale
+	       %sf-text-get-origin
+	       %sf-text-move
+	       %sf-text-rotate
+	       %sf-text-scale
+	       %sf-text-get-transform
+	       %sf-text-get-inverse-transform
+	       %sf-text-set-string
+	       %sf-text-set-unicode-string
+	       %sf-text-set-font
+	       %sf-text-set-character-size
+	       %sf-text-set-style
+	       %sf-text-set-color
+	       %sf-text-get-string
+	       %sf-text-get-unicode-string
+	       %sf-text-get-font
+	       %sf-text-get-character-size
+	       %sf-text-get-style
+	       %sf-text-get-color
+	       %sf-text-find-character-pos
+	       %sf-text-get-local-bounds
+	       %sf-text-get-global-bounds
+	       sf-text-*
+	       ;; From sfml2/graphics/texture-unsafe.scm
+	       <sf-texture>
+	       sf-texture?
+	       wrap-sf-texture
+	       unwrap-sf-texture
+	       %sf-texture-create
+	       %sf-texture-create-from-file
+	       %sf-texture-create-from-memory
+	       %sf-texture-create-from-stream
+	       %sf-texture-create-from-image
+	       %sf-texture-copy
+	       %sf-texture-destroy
+	       %sf-texture-get-size
+	       %sf-texture-copy-to-image
+	       %sf-texture-update-from-pixels
+	       %sf-texture-update-from-image
+	       %sf-texture-update-from-window
+	       %sf-texture-update-from-render-window
+	       %sf-texture-set-smooth
+	       %sf-texture-is-smooth
+	       %sf-texture-set-repeated
+	       %sf-texture-is-repeated
+	       %sf-texture-bind
+	       %sf-texture-get-maximum-size
+	       sf-texture-*
+	       ;; From sfml2/graphics/transform-unsafe.scm
+	       sf-transform
+	       sf-transform-*
+	       sf-transform->pointer
+	       pointer->sf-transform
+	       %sf-transform-from-matrix
+	       %sf-transform-get-matrix
+	       %sf-transform-get-inverse
+	       %sf-transform-transform-point
+	       %sf-transform-transform-rect
+	       %sf-transform-combine
+	       %sf-transform-translate
+	       %sf-transform-rotate
+	       %sf-transform-rotate-with-center
+	       %sf-transform-scale
+	       %sf-transform-scale-with-center
+	       ;; From sfml2/graphics/transformable-unsafe.scm
+	       <sf-transformable>
+	       sf-transformable?
+	       wrap-sf-transformable
+	       unwrap-sf-transformable
+	       %sf-transformable-create
+	       %sf-transformable-copy
+	       %sf-transformable-destroy
+	       %sf-transformable-set-position
+	       %sf-transformable-set-rotation
+	       %sf-transformable-set-scale
+	       %sf-transformable-set-origin
+	       %sf-transformable-get-position
+	       %sf-transformable-get-rotation
+	       %sf-transformable-get-scale
+	       %sf-transformable-get-origin
+	       %sf-transformable-move
+	       %sf-transformable-rotate
+	       %sf-transformable-scale
+	       %sf-transformable-get-transform
+	       %sf-transformable-get-inverse-transform
+	       sf-transformable-*
+	       ;; From sfml2/graphics/vertex-array-unsafe.scm
+	       <sf-vertex-array>
+	       sf-vertex-array?
+	       wrap-sf-vertex-array
+	       unwrap-sf-vertex-array
+	       %sf-vertex-array-create
+	       %sf-vertex-array-copy
+	       %sf-vertex-array-destroy
+	       %sf-vertex-array-get-vertex-count
+	       %sf-vertex-array-get-vertex
+	       %sf-vertex-array-clear
+	       %sf-vertex-array-resize
+	       %sf-vertex-array-append
+	       %sf-vertex-array-set-primitive-type
+	       %sf-vertex-array-get-primitive-type
+	       %sf-vertex-array-get-bounds
+	       sf-vertex-array-*
+	       ;; From sfml2/graphics/vertex-unsafe.scm
+	       sf-vertex
+	       sf-vertex-*
+	       sf-vertex->pointer
+	       pointer->sf-vertex
+	       ;; From sfml2/graphics/view-unsafe.scm
+	       <sf-view>
+	       sf-view?
+	       wrap-sf-view
+	       unwrap-sf-view
+	       %sf-view-create
+	       %sf-view-create-from-rect
+	       %f-view-copy
+	       %sf-view-destroy
+	       %sf-view-set-center
+	       %sf-view-set-size
+	       %sf-view-set-rotation
+	       %sf-view-set-viewport
+	       %sf-view-reset
+	       %sf-view-get-center
+	       %sf-view-get-size
+	       %sf-view-get-rotation
+	       %sf-view-get-viewport
+	       %sf-view-move
+	       %sf-view-rotate
+	       %sf-view-zoom
+	       sf-view-*))

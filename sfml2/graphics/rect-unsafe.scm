@@ -1,3 +1,12 @@
+;;; 2014 EAY eduardo.acye@gmail.com
+
+;;;
+;;; file: sfml2/graphics/rect-unsafe.scm
+;;; 
+;;; Module that exports the sf-rect structure and the associated
+;;; procedures.
+;;;
+
 (define-module (sfml2 graphics rect-unsafe)
   #:use-module (system foreign)
   #:use-module (sfml2 utils)
@@ -15,7 +24,10 @@
 	    %sf-float-rect-intersects
 	    %sf-int-rect-intersects))
 
+;;; structure binding for the sfFloatRect simple structure
 (define sf-float-rect (list float float float float))
+
+;;; alias for sfFloatRect*
 (define sf-float-rect-* '*)
 
 (define (pointer->sf-float-rect c-struct)
@@ -23,8 +35,10 @@
 (define (sf-float-rect->pointer lst-struct)
   (make-c-struct sf-float-rect lst-struct))
 
-
+;;; structure binding for the sfIntRect simple structure
 (define sf-int-rect (list int int int int))
+
+;;; alias for sfIntRect*
 (define sf-int-rect-* '*)
 
 (define (pointer->sf-int-rect c-struct)
@@ -32,7 +46,7 @@
 (define (sf-int-rect->pointer lst-struct)
   (make-c-struct sf-int-rect lst-struct))
 
-
+;;; binding function
 (define-ff %sf-float-rect-contains
   sf-bool sfFloatRect_contains (list sf-float-rect-* float float))
 (define-ff %sf-int-rect-contains

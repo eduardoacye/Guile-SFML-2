@@ -1,3 +1,12 @@
+;;; 2014 EAY eduardo.acye@gmail.com
+
+;;;
+;;; file: sfml2/graphics/sprite-unsafe.scm
+;;; 
+;;; Module that exports the <sf-sprite> record and the associated
+;;; procedures.
+;;;
+
 (define-module (sfml2 graphics sprite-unsafe)
   #:use-module (system foreign)
   #:use-module (sfml2 utils)
@@ -38,12 +47,14 @@
 	    %sf-sprite-get-global-bounds)
   #:re-export (sf-sprite-*))
 
+;;; record for the sfSprite opaque structure
 (define-wrapped-pointer-type <sf-sprite>
   sf-sprite?
   wrap-sf-sprite unwrap-sf-sprite
   (lambda (s port)
     (display "<sf-sprite>" port)))
 
+;;; binding functions
 (define-ff %sf-sprite-create
   sf-sprite-* sfSprite_create (list))
 

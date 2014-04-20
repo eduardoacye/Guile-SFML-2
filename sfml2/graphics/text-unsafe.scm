@@ -1,3 +1,12 @@
+;;; 2014 EAY eduardo.acye@gmail.com
+
+;;;
+;;; file: sfml2/graphics/text-unsafe.scm
+;;; 
+;;; Module that exports the <sf-text> record and the associated
+;;; procedures and enumerations.
+;;;
+
 (define-module (sfml2 graphics text-unsafe)
   #:use-module (system foreign)
   #:use-module (sfml2 utils)
@@ -44,12 +53,14 @@
 	    %sf-text-get-global-bounds)
   #:re-export (sf-text-*))
 
+;;; record for the sfText opaque structure
 (define-wrapped-pointer-type <sf-text>
   sf-text?
   wrap-sf-text unwrap-sf-text
   (lambda (t port)
     (display "<sf-text>" port)))
 
+;;; enum binding for sfTextStyle
 (define sf-text-style int)
 
 (define sf-text-regular    0)
@@ -57,6 +68,7 @@
 (define sf-text-italic     2)
 (define sf-text-underlined 3)
 
+;;; binding functions
 (define-ff %sf-text-create
   sf-text-* sfText_create (list))
 

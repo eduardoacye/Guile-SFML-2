@@ -1,3 +1,12 @@
+;;; 2014 EAY eduardo.acye@gmail.com
+
+;;;
+;;; file: sfml2/graphics/texture-unsafe.scm
+;;; 
+;;; Module that exports the <sf-texture> record and the associated
+;;; procedures.
+;;;
+
 (define-module (sfml2 graphics texture-unsafe)
   #:use-module (system foreign)
   #:use-module (sfml2 utils)
@@ -32,13 +41,14 @@
 	    %sf-texture-get-maximum-size)
   #:re-export (sf-texture-*))
 
+;;; record for the sfTexture opaque structure
 (define-wrapped-pointer-type <sf-texture>
   sf-texture?
   wrap-sf-texture unwrap-sf-texture
   (lambda (t port)
     (display "<sf-texture>" port)))
 
-
+;;; binding functions
 (define-ff %sf-texture-create
   sf-texture-* sfTexture_create (list unsigned-int unsigned-int))
 
@@ -95,5 +105,3 @@
 
 (define-ff %sf-texture-get-maximum-size
   unsigned-int sfTexture_getMaximumSize (list))
-
-

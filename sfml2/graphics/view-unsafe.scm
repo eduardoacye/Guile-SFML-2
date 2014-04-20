@@ -1,3 +1,12 @@
+;;; 2014 EAY eduardo.acye@gmail.com
+
+;;;
+;;; file: sfml2/graphics/view-unsafe.scm
+;;; 
+;;; Module that exports the <sf-view> record and the associated
+;;; procedures.
+;;;
+
 (define-module (sfml2 graphics view-unsafe)
   #:use-module (system foreign)
   #:use-module (sfml2 utils)
@@ -27,12 +36,14 @@
 	    %sf-view-zoom)
   #:re-export (sf-view-*))
 
+;;; record for the sfView opaque structure
 (define-wrapped-pointer-type <sf-view>
   sf-view?
   wrap-sf-view unwrap-sf-view
   (lambda (v port)
     (display "<sf-view>" port)))
 
+;;; binding functions
 (define-ff %sf-view-create
   sf-view-* sfView_create (list))
 
