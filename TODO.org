@@ -3,17 +3,17 @@
 *** DONE common.scm
 *** DONE binding structures
 *** DONE binding functions
-*** TODO Code documentation
-** TODO SFML/Window
-*** TODO common.scm
-*** TODO binding structures
-*** TODO binding functions
-*** TODO Code documentation
-** TODO SFML/Graphics
-*** TODO common.scm
-*** TODO binding structures
-*** TODO binding functions
-*** TODO Code documentation
+*** DONE Code documentation
+** DONE SFML/Window
+*** DONE common.scm
+*** DONE binding structures
+*** DONE binding functions
+*** DONE Code documentation
+** DONE SFML/Graphics
+*** DONE common.scm
+*** DONE binding structures
+*** DONE binding functions
+*** DONE Code documentation
 ** TODO SFML/Audio
 *** TODO common.scm
 *** TODO binding structures
@@ -55,5 +55,5 @@
 ** TODO Examples
 *** TODO super simple text editor
 *** TODO crappy piano
-* automaton expansion
+* Automatón
 ** define the outlines for this library
