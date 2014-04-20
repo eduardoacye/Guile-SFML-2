@@ -118,6 +118,8 @@ There are two important things that make up a C library: The structures that rep
 
 The way CSFML is written has two types of structures: the simple compound data in SFML is a C struct (usualy the ones that are composed from standard C types like the 3-dimentional vector that just has 3 float numbers in the struct); the more complicated classes are handled as opaque data types, this are structs without data that are used with pointers to the C++ class that has the data, the functions that are aviable from C are mixed with C++ to perform operations with the opaque pointer, so the C part of the program doesn't know what the C++ part does, it just glue code.
 
+\bigskip
+
 The Guile module we have for working with the FFI is \texttt{(system foreign)}. To have access to the functions from the library we have to use the procedure \texttt{dynamic-link} to get a linked Scheme object (we'll use this when binding functions).
 
 I'll call the first type of structures \emph{simple data} and the second type of structures \emph{opaque data}. The simple data is going to be wrapped in Guile with \texttt{make-c-struct} (read 6.20.5.4 Foreign Structs from the Guile Manual) and the opaque data is going to be wrapped in Guile with \texttt{define-wrapped-pointer-type} (read 6.20.5.3 Void Pointers and Byte Access from the Guile Manual).

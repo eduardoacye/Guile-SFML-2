@@ -29,6 +29,7 @@
 	    sf-context-settings
 	    pointer->sf-context-settings
 	    sf-context-settings->pointer
+	    sf-context-settings-*
 	    %sf-window-create
 	    %sf-window-create-unicode
 	    %sf-window-create-from-handle
@@ -165,7 +166,7 @@
            sf-bool sfWindow_setKeyRepeatEnabled (list sf-window-* sf-bool))
 
 (define-ff %sf-window-display
-           void sfWindow_display (list sf-window*))
+           void sfWindow_display (list sf-window-*))
 
 (define-ff %sf-window-set-framerate-limit
            void sfWindow_setFramerateLimit (list sf-window-* unsigned-int))

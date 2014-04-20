@@ -15,6 +15,7 @@
 	    sf-context?
 	    wrap-sf-context
 	    unwrap-sf-context
+	    sf-context-*
 	    %sf-context-create
 	    %sf-context-destroy
 	    %sf-context-set-active))

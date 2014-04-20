@@ -11,6 +11,10 @@
   #:use-module (rnrs bytevectors)
   #:export (sf-bool
 	    char
+	    char-*
+	    uint32-*
+	    uint8-*
+	    float-*
 	    number->boolean
 	    boolean->number
 	    make-c-union
@@ -22,6 +26,12 @@
 
 ;;; C char type
 (define char int8)
+
+;;; Misc pointer types
+(define char-* '*)
+(define uint32-* '*)
+(define uint8-* '*)
+(define float-* '*)
 
 ;;; number->boolean : number -> boolean
 ;;; usage : returns #t if n is not 0
