@@ -60,8 +60,34 @@ The structure of the bindings is very similar to the directory structure of the 
 
   \item \textbf{graphics}
     \begin{itemize}
-    \item \texttt{todo}
+    \item blend-mode-unsafe.scm
+    \item circle-shape-unsafe.scm
+    \item color-unsafe.scm
+    \item common.scm
+    \item convex-shape-unsafe.scm
+    \item font-unsafe.scm
+    \item glyph-unsafe.scm
+    \item image-unsafe.scm
+    \item primitive-type-unsafe.scm
+    \item rect-unsafe.scm
+    \item rectangle-shape-unsafe.scm
+    \item render-states-unsafe.scm
+    \item render-texture-unsafe.scm
+    \item render-window-unsafe.scm
+    \item shader-unsafe.scm
+    \item shape-unsafe.scm
+    \item sprite-unsafe.scm
+    \item text-unsafe.scm
+    \item texture-unsafe.scm
+    \item transform-unsafe.scm
+    \item transformable-unsafe.scm
+    \item types-unsafe.scm
+    \item vertex-array-unsafe.scm
+    \item vertex-unsafe.scm
+    \item view-unsafe.scm
     \end{itemize}
+
+  \item graphics-unsafe.scm
 
   \item \textbf{network}
     \begin{itemize}
@@ -72,6 +98,7 @@ The structure of the bindings is very similar to the directory structure of the 
     \begin{itemize}
     \item clock-unsafe.scm
     \item common.scm
+    \item input-stream-unsafe.scm
     \item sleep-unsafe.scm
     \item time-unsafe.scm
     \item vector2-unsafe.scm
@@ -84,8 +111,18 @@ The structure of the bindings is very similar to the directory structure of the 
 
   \item \textbf{window}
     \begin{itemize}
-    \item \texttt{todo}
+    \item common.scm
+    \item context-unsafe.scm
+    \item event-unsafe.scm
+    \item joystick-unsafe.scm
+    \item keyboard-unsafe.scm
+    \item mouse-unsafe.scm
+    \item video-mode-unsafe.scm
+    \item window-handle-unsafe.scm
+    \item window-unsafe.scm
     \end{itemize}
+
+  \item window-unsafe.scm
 
   \end{itemize}
 
@@ -322,10 +359,150 @@ Here is the list of the Scheme files in order of implementation and the structur
 \end{itemize}
 
 \subsubsection*{Enums implementation}
+The enum binding is implemented with \texttt{define}. Some functions of the CSFML library have an enum type as an argument, so each enum is going to be defined with the type \texttt{int} and each value of the enum is going to be associated with a numeric value.
+
+For example, in the file \texttt{/include/SFML/Window/Mouse.h} of the CSFML repository, the author describes the sfMouseButton enum:
+
+\begin{verbatim}
+typedef enum
+{
+  sfMouseLeft, ///< The left mouse button
+  sfMouseRight, ///< The right mouse button
+  sfMouseMiddle, ///< The middle (wheel) mouse button
+  sfMouseXButton1, ///< The first extra mouse button
+  sfMouseXButton2, ///< The second extra mouse button
+  
+  sfMouseButtonCount ///< Keep last -- the total number of mouse buttons
+} sfMouseButton;
+\end{verbatim}
+
+The translation to Scheme I picked is a direct definition of the symbols with the value set manually:
+
+\begin{verbatim}
+;;; enum binding for sfMouseButton
+(define sf-mouse-button int)
+
+(define sf-mouse-left         0)
+(define sf-mouse-right        1)
+(define sf-mouse-middle       2)
+(define sf-mouse-x-button-1   3)
+(define sf-mouse-x-button-2   4)
+(define sf-mouse-button-count 5)
+\end{verbatim}
+
+The \texttt{sf-mouse-button} definition is not necessary but the foreign function definitions are cleaner.
+
+For example if we consider the C function:
+
+\begin{verbatim}
+CSFML_WINDOW_API sfBool sfMouse_isButtonPressed(sfMouseButton button);
+\end{verbatim}
+
+Instead of writting:
+
+\begin{verbatim}
+(define-ff %sf-mouse-is-button-pressed
+  sf-bool sfMouse_isButtonPressed (list int))
+\end{verbatim}
+
+We write:
+
+\begin{verbatim}
+(define-ff %sf-mouse-is-button-pressed
+  sf-bool sfMouse_isButtonPressed (list sf-mouse-button))
+\end{verbatim}
+
+This way we know that the function accepts a value from the sfMouseButton enum.
 
 \subsubsection*{Union implementation}
+As of this date, the SFML binding only uses a union type in one occasion (in event.h). Currently the \texttt{(system foreign)} module doesnt give a way of defining unions, but I wrote a simple (and not efficient) way of using them.
+
+The C \texttt{union} type is a heterogeneous data type, similar to the C \texttt{struct}, with the difference that a union instance can just contain one of the values at the same time. To explain myself better, here is an example comparing the two:
+
+\begin{verbatim}
+// size of the types in my computer
+typedef struct
+{
+  char a;        // 1 byte
+  int b;         // 4 bytes
+  double c;      // 8 bytes
+} cucus_struct;
+
+typedef union
+{
+  char a;        // 1 byte
+  int b;         // 4 bytes
+  double c;      // 8 bytes
+} cucus_union;
+\end{verbatim}
+
+The \texttt{cucus\_struct} type contains 13 bytes of data, while the \texttt{cucus\_union} type contains only 8 bytes of data. The union has the size of the biggest element, and the other types are aligned with offset 0 in the structure. Unions are usually used when we know that only one of the values will be used.
+
+\bigskip
+
+The way I use the union type in the bindings is the following:
+
+\begin{verbatim}
+;;; union binding for the sf-event union of structures
+(define sf-event (list sf-event-type
+                       sf-size-event
+                       sf-key-event
+                       sf-text-event
+                       sf-mouse-move-event
+                       sf-mouse-button-event
+                       sf-mouse-wheel-event
+                       sf-joystick-move-event
+                       sf-joystick-button-event
+                       sf-joystick-connect-event))
+
+(define (pointer->sf-event c-union type)
+  (parse-c-union sf-event c-union type))
+
+(define (sf-event->pointer type lst-union)
+  (make-c-union sf-event type lst-union))
+
+;;; Alias for the sfEvent*
+(define sf-event-* '*)
+\end{verbatim}
+
+I wanted to make the union definition similar to the way I define structures with the \texttt{make-c-struct} and \texttt{parse-c-struct} procedures, so I defined two new procedures: \texttt{make-c-union} and \texttt{parse-c-union}. The idea is to have a list of the types inside the union (in the example \texttt{sf-event}), this list can contain a type like \texttt{int} (the type of \texttt{sf-event-type}) or a list of types representing a structure, like \texttt{(list int uint32)} (the type of \texttt{sf-text-event}) (A union of unions can not be implemented currently (I hope to provide a fix for making the union type similar to the C union type)).
+
+\bigskip
+
+Here is the implementation of the two procedures (they are written in the file \texttt{sfml2/utils.scm}):
+
+\begin{verbatim}
+(define (make-c-union all-types type vals)
+  (define bv (make-bytevector (apply max (map sizeof all-types)) 0))
+  (define ptr (make-c-struct (if (pair? type) type (list type))
+			     (if (pair? vals) vals (list vals))))
+  (define bv2 (pointer->bytevector ptr (sizeof type)))
+  (unless (member type all-types)
+    (error "type not in union" type all-types))
+  (bytevector-copy! bv2 0 bv 0 (bytevector-length bv2))
+  (bytevector->pointer bv))
+
+(define (parse-c-union all-types union type)
+  (unless (member type all-types)
+    (error "type not in union" type all-types))
+  (parse-c-struct union (if (pair? type) type (list type))))
+\end{verbatim}
 
 \subsection{SFML/Graphics}
+The implementation of this sub-library was more tedious but staightforward than the Window sub-library (A lot of things to write that were practically the same).
+
+\subsubsection*{Unsafe version of the Graphics sub-library}
+The order of implementation was divided in 4 sections:
+\begin{enumerate}
+\item PrimitiveType, Rect, Types, Color, BlendMode
+\item Glyph, Image, Texture, Transform, Vertex, View
+\item CircleShape, ConvexShape, Font, RectangleShape, RenderStates, Shader, Shape, Sprite, Text, Transformable, VertexArray
+\item RenderWindow, RenderTexture
+\end{enumerate}
+
+\subsubsection*{Function pointers binding}
+The only thing I have not checked nor implemented correctly are the function pointer bindings, all the functions that have as arguments a function pointer I defined with the \texttt{'*} type. The problem is that I don't even know how they are used in the SFML library, so this will be revised later.
+
 \subsection{SFML/Audio}
 \subsection{SFML/Network}
 \subsection{Testing bindings: SFML 2.1 tutorials}
